@@ -1,0 +1,29 @@
+{
+  "AllSongs": [
+    {
+      "Song1": {
+        "Name": "Yesterday",
+        "Genre": "Pop",
+        "Aritst": "Beattles",
+        "IconImageUrl": "/Assets/Icon/...",
+        "Link": "/Assets/Audio..."
+      },
+      "Song2": {
+        "Name": "Symphony No. 2 in D major, Op. 36",
+        "Genre": "Classical",
+        "Aritst": " Ludwig van Beethoven",
+        "IconImageUrl": "/Assets/Icon/...",
+        "Link": "/Assets/Audio..."
+      },
+
+      "Song3": {
+        "Name": "Bohemian Rhapsody",
+        "Genre": "Rock",
+        "Aritst": "Queen",
+        "IconImageUrl": "/Assets/Icon/...",
+        "Link": "/Assets/Audio..."
+      }
+
+    }
+
+}
