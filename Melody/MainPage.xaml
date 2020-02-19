@@ -9,7 +9,22 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height ="*" />
+            <RowDefinition Height="0" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image Source="C:\Users\Andrea Tan\Documents\GitHub\Melody\Melody\Assets\Melody Image.png">
 
-      
+            </Image>
+        </Grid>
+
+
     </Grid>
 </Page>
