@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Windows.System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +22,12 @@ namespace Melody
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        
+        //Test comment for XAML pull
         public MainPage()
         {
             this.InitializeComponent();
+
         }
     }
 }
