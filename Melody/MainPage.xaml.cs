@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using Windows.System;
+using Windows.System.Collections.Generic;
+using Windows.System.IO;
+using Windows.System.Linq;
+using Windows.System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +22,12 @@ namespace Melody
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        
+        //Test comment for XAML pull
         public MainPage()
         {
             this.InitializeComponent();
+
         }
     }
 }
