@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Melody.Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,11 +23,16 @@ namespace Melody
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        
-        //Test comment for XAML pull
+        private List<PlayListModel> playLists;
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            playLists = new List<PlayListModel>();
+
+
+            // Add playlists to list of playlists
 
         }
     }

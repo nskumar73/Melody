@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Model\PlayListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PlayListManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
