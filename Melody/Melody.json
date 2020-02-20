@@ -4,14 +4,14 @@
       "Song1": {
         "Name": "Yesterday",
         "Genre": "Pop",
-        "Aritst": "Beattles",
+        "Artist": "Beattles",
         "IconImageUrl": "/Assets/Icon/...",
         "Link": "/Assets/Audio..."
       },
       "Song2": {
         "Name": "Symphony No. 2 in D major, Op. 36",
         "Genre": "Classical",
-        "Aritst": " Ludwig van Beethoven",
+        "Artist": " Ludwig van Beethoven",
         "IconImageUrl": "/Assets/Icon/...",
         "Link": "/Assets/Audio..."
       },
@@ -19,7 +19,7 @@
       "Song3": {
         "Name": "Bohemian Rhapsody",
         "Genre": "Rock",
-        "Aritst": "Queen",
+        "Artist": "Queen",
         "IconImageUrl": "/Assets/Icon/...",
         "Link": "/Assets/Audio..."
       }
