@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Melody.Model
 {
     //Playlist model to define playlist collection (e.g. All Songs)
-    class PlayList
+    public class PlayList
     {
         //Properties of playlist
         public string Name { get; set; }
