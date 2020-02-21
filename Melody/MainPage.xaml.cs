@@ -24,14 +24,15 @@ namespace Melody
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private ObservableCollection<PlayListModel> playLists;
+        private readonly ObservableCollection<PlayList> playLists;
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            playLists = new ObservableCollection<PlayListModel>();
+            playLists = new ObservableCollection<PlayList>();
 
+            playLists.Add(new PlayList());
 
             // Add playlists to list of playlists
 
