@@ -12,19 +12,25 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height ="*" />
-            <RowDefinition Height="0" />
         </Grid.RowDefinitions>
-        <Grid>
+        <!-- In future, wrap this Image in a Layout control to provide for
+            right-aligned album cover art -->
+        <Image Source="/Assets/Melody Image.png" Height="40"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height ="0" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="C:\Users\Andrea Tan\Documents\GitHub\Melody\Melody\Assets\Melody Image.png">
+            <!-- ListView />
+                <ListView.ItemTemplate>
+                    
+                </ListView.ItemTemplate -->
 
-            </Image>
+
         </Grid>
-
-
     </Grid>
 </Page>
