@@ -30,7 +30,14 @@
                       ItemsSource ="{x:Bind playLists}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:PlayList">
-                        <TextBlock Text="A Playlist"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="5">
+                            <Image Height="80"
+                                   Source="{x:Bind CoverFilePath}"/>
+                            <TextBlock Padding="5"
+                                       Text="{x:Bind Name}"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
