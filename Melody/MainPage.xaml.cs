@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Melody.Model;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,13 +24,13 @@ namespace Melody
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private List<PlayListModel> playLists;
+        private ObservableCollection<PlayListModel> playLists;
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            playLists = new List<PlayListModel>();
+            playLists = new ObservableCollection<PlayListModel>();
 
 
             // Add playlists to list of playlists

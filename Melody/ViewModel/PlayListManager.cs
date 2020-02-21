@@ -8,7 +8,7 @@ namespace Melody.ViewModel
 {
     class PlayListManager
     {
-
+        //Properties of PlaylistManager
 
     }
 }
