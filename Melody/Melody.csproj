@@ -11,8 +11,8 @@
     <AssemblyName>Melody</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -131,6 +131,23 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\2 Unlimited - Get Ready %28Steve Aoki Instrumental Radio Edit%29.m4a" />
+    <Content Include="Assets\3LAU - How You Love Me %28feat. Bright Lights%29.m4a" />
+    <Content Include="Assets\a-ha - Take On Me.m4a" />
+    <Content Include="Assets\A.B. Logic - The Hitman %287%27%27 Mix%29.m4a" />
+    <Content Include="Assets\Adele - Skyfall.m4a" />
+    <Content Include="Assets\Avril Lavigne - Girlfriend.m4a" />
+    <Content Include="Assets\Badfinger - Baby Blue.m4a" />
+    <Content Include="Assets\Bananarama - Venus.m4a" />
+    <Content Include="Assets\Billie Eilish - No Time To Die.m4a" />
+    <Content Include="Assets\Bruno Mars - 24K Magic.m4a" />
+    <Content Include="Assets\C+C Music Factory - Gonna Make You Sweat %28Everybody Dance Now%29.m4a" />
+    <Content Include="Assets\Cake - The Distance.m4a" />
+    <Content Include="Assets\Elton John - I%27m Still Standing.m4a" />
+    <Content Include="Assets\Enya - Amarantine %28Album Version%29.m4a" />
+    <Content Include="Assets\Funkin Matt - Aurora.m4a" />
+    <Content Include="Assets\Janelle Monáe - Make Me Feel.m4a" />
+    <Content Include="Assets\Marilyn Manson - Tainted Love.m4a" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
