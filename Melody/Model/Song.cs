@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 namespace Melody.Model
 {
     /// <summary>
-    /// This is model class for Play list
+    /// This is model class for 
     /// </summary>
-    public sealed class PlayListModel
+    public sealed class Song
     {
         /// <summary>
-        /// Name of the artist
+        /// Name of the song
         /// </summary>
        public string Name { get; set; }
 
         /// <summary>
-        /// Genre of the music
+        /// Genre of the song
         /// </summary>
         public string Genre { get; set; }
         
 
         /// <summary>
-        /// Artist Name
+        /// Artist of the song
         /// </summary>
         public string Artist { get; set; }
     }
