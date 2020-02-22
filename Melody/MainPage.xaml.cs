@@ -101,7 +101,31 @@ namespace Melody
 
         private void PlayListSaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // What does sender refer to?
+            // This never came up in Kal's example
+            // e is going to refer to the button itself, I think
+            // Not useful for deciding what songs to add to the new playlist
 
+            // TODO: Can we ask the ListView which songs are selected at this point, or
+            // do we have to keep track of which ones are selected/deselected as the
+            // user is selecting songs?
+
+
+            // TODO: Figure out how to get the default placeholder text
+            // Provided by the control to be the content of the Text field
+            // when it is queried by other controls
+            var newPlaylist = new PlayList(PlayListName_UserInput.Text);
+
+            foreach (var song in PlayListSongSelectionEditView.SelectedItems)
+            {
+                // We know that song is a Song because PlayListSongSelectionEditView
+                // is bound to a List<Song>
+                // Type cast song to Song so that it can be added to the list of
+                // Song on newPlaylist
+                newPlaylist.Songs.Add((Song)song);
+            }
+
+            playLists.Add(newPlaylist);
         }
     }
 }
