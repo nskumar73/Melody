@@ -33,6 +33,10 @@ namespace Melody
         
         private readonly ObservableCollection<PlayList> playLists;
 
+        // Would be readonly if the reference was set in the MainPage constructor
+        // This is a placeholder for building the UI anyway
+        private PlayList allSongs;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -42,16 +46,15 @@ namespace Melody
 
         }
 
-
         public void ConstructPlaceholderDataObjects()
         {
             // Create the dummy All Songs playlist
-            var AllSongs = new PlayList("All Songs");
+            allSongs = new PlayList("All Songs");
             // Populate with dummy songs
             // (Represents the entire library of songs)
             for (var num = 1; num <= DUMMY_SONGS_COUNT; ++num)
             {
-                AllSongs.Songs.Add(new Song
+                allSongs.Songs.Add(new Song
                 {
                     Name = $"Placeholder Song Name {num}",
                     Artist = "Placeholder Song Artist",
@@ -59,8 +62,10 @@ namespace Melody
                 });
 
             }
+
             // First PlayList in the collection will be All Songs
-            playLists.Add(AllSongs);
+            // Or not? Maybe need to special-case this?
+            playLists.Add(allSongs);
 
 
             for (var num = 1; num <= DUMMY_PLAYLIST_COUNT; ++num)
@@ -84,6 +89,14 @@ namespace Melody
 
 
 
+        }
+
+        private void PlayListSongSelectionEditView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Wait. Maybe we don't need to do anything when the selection
+            // changes in the playlist editor list view.
+            // I think we only need to do something about the state of the
+            // selection when the user saves their playlist
         }
     }
 }

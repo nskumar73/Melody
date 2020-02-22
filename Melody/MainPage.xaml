@@ -34,7 +34,7 @@
             </Grid.ColumnDefinitions>
             
             <!--#region PlayListMenuSidebar-->
-            <ListView Name="PlayListMenuSidebar"
+            <ListView x:Name="PlayListMenuSidebarView"
                       ItemsSource ="{x:Bind playLists}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:PlayList">
@@ -57,7 +57,30 @@
                         Orientation="Vertical">
                 <TextBlock Text="Some introductory text about creating a playlist."
                            HorizontalAlignment="Center"/>
-                
+
+                <ListView x:Name="PlayListSongSelectionEditView"
+                          ItemsSource="{x:Bind allSongs.Songs}"
+                          SelectionMode="Multiple"
+                          SelectionChanged="PlayListSongSelectionEditView_SelectionChanged">
+                    <!-- Bind to the List<Songs>, not the PlayList object itself -->
+                    <!-- ?? Apparently can only bind to the name of an object,
+                        cannot bind to an object returned by a method?
+                        playLists.First() ??? -->
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:Song">
+                            <StackPanel Orientation="Vertical"
+                                        Margin="5">
+                                <TextBlock Text="{x:Bind Name}"
+                                           Padding="2"/>
+                                <TextBlock Text="{x:Bind Artist}"
+                                           Padding="2"/>
+                                <TextBlock Text="{x:Bind Genre}"
+                                           Padding="2"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
             </StackPanel>
             <!--#endregion-->
         </Grid>
