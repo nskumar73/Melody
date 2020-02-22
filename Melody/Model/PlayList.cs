@@ -12,14 +12,16 @@ namespace Melody.Model
         //Properties of playlist
         public string Name { get; set; }
         public string CoverFilePath { get; set; }
-        //Playlistmodel type should be renamed to Song
-        private readonly List<Song> songs;
+
+        // TODO: Protect the songs list from arbitrary editing by users of the 
+        // PlayList class
+        public readonly List<Song> Songs;
 
         public PlayList(string name)
         {
             Name = name;
             CoverFilePath = "/Assets/PlaylistCoverPlaceholder.png";
-            songs = new List<Song>();
+            Songs = new List<Song>();
         }
 
         // TODO: PlayList (or maybe a wrapper around it?)

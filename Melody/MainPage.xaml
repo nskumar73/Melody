@@ -11,36 +11,55 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height ="*" />
+            <RowDefinition Height="Auto" /><!-- Melody Banner and Cover Art -->
+            <RowDefinition Height ="*" /><!-- Rest of the layout -->
         </Grid.RowDefinitions>
+
+        <!--#region Melody Banner-->
         <!-- In future, wrap this Image in a Layout control to provide for
             right-aligned album cover art -->
-        <Image Source="/Assets/Melody Image.png" Height="40"/>
+        <Image Source="/Assets/Melody Image.png"
+               Height="40"
+               HorizontalAlignment="Left"/>
+        <!--#endregion-->
+        
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height ="0" />
+                <RowDefinition Height ="0" /> <!-- TODO: Media Player Control -->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/><!-- PlayListMenuSidebar -->
+                <ColumnDefinition Width="*"/><!-- View/Play || Create PlayList -->
             </Grid.ColumnDefinitions>
-            <ListView Name="PlaylistView"
+            
+            <!--#region PlayListMenuSidebar-->
+            <ListView Name="PlayListMenuSidebar"
                       ItemsSource ="{x:Bind playLists}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:PlayList">
                         <StackPanel Orientation="Horizontal"
                                     Margin="5">
-                            <Image Height="80"
-                                   Source="{x:Bind CoverFilePath}"/>
-                            <TextBlock Padding="5"
-                                       Text="{x:Bind Name}"
+                            <Image Source="{x:Bind CoverFilePath}"
+                                   Height="80"/>
+                            <TextBlock Text="{x:Bind Name}"
+                                       Padding="5"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <!--#endregion-->
+
+            <!--#region CreatePlayList-->
+            <StackPanel x:Name="CreatePlayList"
+                        Grid.Column="1"
+                        Orientation="Vertical">
+                <TextBlock Text="Some introductory text about creating a playlist."
+                           HorizontalAlignment="Center"/>
+                
+            </StackPanel>
+            <!--#endregion-->
         </Grid>
     </Grid>
 </Page>
