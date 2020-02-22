@@ -55,7 +55,7 @@
             <StackPanel x:Name="CreatePlayList"
                         Grid.Column="1"
                         Orientation="Vertical">
-                <TextBlock Text="Some introductory text about creating a playlist."
+                <TextBlock Text="Select songs for your new playlist:"
                            HorizontalAlignment="Center"/>
 
                 <ListView x:Name="PlayListSongSelectionEditView"
@@ -80,6 +80,23 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="5"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Enter a name for your new playlist:" 
+                               Padding="5"/>
+                    <!-- TODO: Vary default playlist name to not offer a
+                               default/placeholder playlist name that is
+                               already in use by a current playlist -->
+                    <TextBox x:Name="PlayListName_UserInput"
+                             PlaceholderText="New Playlist 1"
+                             Padding="5"/>
+                    <Button x:Name="PlayListSaveButton"
+                            Content="Save Playlist"
+                            Click="PlayListSaveButton_Click"
+                            Padding="5"/>
+                </StackPanel>
 
             </StackPanel>
             <!--#endregion-->

@@ -98,5 +98,10 @@ namespace Melody
             // I think we only need to do something about the state of the
             // selection when the user saves their playlist
         }
+
+        private void PlayListSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
