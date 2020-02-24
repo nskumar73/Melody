@@ -133,7 +133,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CreativeCommons\Comfort_Fit_-_03_-_Sorry.mp3" />
+    <Content Include="Assets\CreativeCommons\Comfort_Fit_-_03_-_Sorry.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Melody Image.png" />
     <Content Include="Assets\PlaylistCoverPlaceholder.png" />
     <Content Include="Properties\Default.rd.xml" />
