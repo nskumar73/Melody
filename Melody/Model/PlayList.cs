@@ -6,16 +6,29 @@ using System.Threading.Tasks;
 
 namespace Melody.Model
 {
-    //Playlist model to define playlist collection (e.g. All Songs)
+    /// <summary>
+    /// Model for a playlist that the user can add songs to and select a cover for
+    /// </summary>
     public sealed class PlayList // : INotifyPropertyChanged (see TODO)
     {
-        //Properties of playlist
+        /// <summary>
+        /// Name of the playlist
+        /// Example: "Disco Hits"
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Path to the image file of the playlist
+        /// Example: "\Assets\Images\Disco Ball.png"
+        /// </summary>
         public string CoverFilePath { get; set; }
 
+        /// <summary>
+        /// List of songs in the playlist
+        /// </summary>
+        public readonly List<Song> Songs;
         // TODO: Protect the songs list from arbitrary editing by users of the 
         // PlayList class
-        public readonly List<Song> Songs;
 
         public PlayList(string name)
         {
