@@ -15,7 +15,7 @@
             <RowDefinition Height ="*" /><!-- Rest of the layout -->
         </Grid.RowDefinitions>
 
-        <!--#region Melody Banner-->
+        <!--#region Melody Banner and Future Cover Art -->
         <!-- In future, wrap this Image in a Layout control to provide for
             right-aligned album cover art -->
         <Image Source="/Assets/Melody Image.png"
@@ -25,8 +25,8 @@
         
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height ="0" /> <!-- TODO: Media Player Control -->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height ="*" /> <!-- Media Player Control -->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/><!-- PlayListMenuSidebar -->
@@ -34,8 +34,14 @@
             </Grid.ColumnDefinitions>
             
             <!--#region PlayListMenuSidebar-->
+            <!-- PlayListCreationView and PlayListPlayBackView take up the same
+            page real estate. PlayListCreationView is Visible by default,
+            PlayListPlayBackView is Collapsed/hidden by default, these visible
+            states are managed in MainPage event handlers -->
             <ListView x:Name="PlayListMenuSidebarView"
-                      ItemsSource ="{x:Bind playLists}">
+                      ItemsSource ="{x:Bind displayingPlayLists}"
+                      IsItemClickEnabled="true"
+                      ItemClick="PlayListMenuSidebarView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:PlayList">
                         <StackPanel Orientation="Horizontal"
@@ -51,15 +57,19 @@
             </ListView>
             <!--#endregion-->
 
-            <!--#region CreatePlayList-->
-            <StackPanel x:Name="CreatePlayList"
+            <!--#region PlayListCreationView-->
+            <StackPanel x:Name="PlayListCreationView"
                         Grid.Column="1"
-                        Orientation="Vertical">
+                        Orientation="Vertical"
+                        Visibility="Visible">
                 <TextBlock Text="Select songs for your new playlist:"
                            HorizontalAlignment="Center"/>
 
+                <!-- Recall that the Songs on a PlayList is a List<> not an
+                ObservableCollection<>, thus binding the UI to it directly causes
+                the UI to not respond to changes in the collection -->
                 <ListView x:Name="PlayListSongSelectionEditView"
-                          ItemsSource="{x:Bind allSongs.Songs}"
+                          ItemsSource="{x:Bind displayingSongs}"
                           SelectionMode="Multiple"
                           SelectionChanged="PlayListSongSelectionEditView_SelectionChanged">
                     <!-- Bind to the List<Songs>, not the PlayList object itself -->
@@ -99,6 +109,40 @@
                 </StackPanel>
 
             </StackPanel>
+            <!--#endregion-->
+
+            <!--#region PlayListPlayBackView -->
+            <!-- Appears on the right side of the page and shows the user
+            the songs in the selected playlist. Collapsed/hidden by default -->
+            <ListView x:Name="PlayListPlayBackView"
+                        Grid.Column="1"
+                        ItemsSource="{x:Bind displayingSongs}"
+                        Visibility="Collapsed">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Song">
+                        <StackPanel Orientation="Vertical"
+                                        Margin="5">
+                            <TextBlock Text="{x:Bind Name}"
+                                           Padding="2"/>
+                            <TextBlock Text="{x:Bind Artist}"
+                                           Padding="2"/>
+                            <TextBlock Text="{x:Bind Genre}"
+                                           Padding="2"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--#endregion-->
+
+
+
+            <!--#region MediaPlayerBottomBar -->
+            <MediaPlayerElement Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                x:Name="MediaPlayerBottomBar"
+                                Source="ms-appx:///Media/video1.mp4"
+                                AutoPlay="false"
+                                AreTransportControlsEnabled="true"/>
             <!--#endregion-->
         </Grid>
     </Grid>
