@@ -38,23 +38,32 @@
             page real estate. PlayListCreationView is Visible by default,
             PlayListPlayBackView is Collapsed/hidden by default, these visible
             states are managed in MainPage event handlers -->
-            <ListView x:Name="PlayListMenuSidebarView"
+            <StackPanel> <!-- TODO: Probably make this a RelativePanel?
+                Want the Create New Playlist button to inherit width from
+                the ListView beneath it-->
+                <Button x:Name="CreateNewPlayListButton"
+                        Content="Create New Playlist"
+                        Click="CreateNewPlayListButton_Click"
+                        Padding="5"/>
+                <ListView x:Name="PlayListMenuSidebarView"
                       ItemsSource ="{x:Bind displayingPlayLists}"
                       IsItemClickEnabled="true"
                       ItemClick="PlayListMenuSidebarView_ItemClick">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:PlayList">
-                        <StackPanel Orientation="Horizontal"
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:PlayList">
+                            <StackPanel Orientation="Horizontal"
                                     Margin="5">
-                            <Image Source="{x:Bind CoverFilePath}"
+                                <Image Source="{x:Bind CoverFilePath}"
                                    Height="80"/>
-                            <TextBlock Text="{x:Bind Name}"
+                                <TextBlock Text="{x:Bind Name}"
                                        Padding="5"
                                        VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
             <!--#endregion-->
 
             <!--#region PlayListCreationView-->
@@ -98,7 +107,8 @@
                                Padding="5"/>
                     <!-- TODO: Vary default playlist name to not offer a
                                default/placeholder playlist name that is
-                               already in use by a current playlist -->
+                               already in use by a current playlist
+                               See also: PlayListSaveButton_Click event handler -->
                     <TextBox x:Name="PlayListName_UserInput"
                              PlaceholderText="New Playlist 1"
                              Padding="5"/>
@@ -143,6 +153,9 @@
                                 Source="ms-appx:///Media/video1.mp4"
                                 AutoPlay="false"
                                 AreTransportControlsEnabled="true"/>
+            
+            <!-- Relative path to creative commons test file:
+            \Assets\CreativeCommons\Comfort_Fit_-_03_-_Sorry.mp3 -->
             <!--#endregion-->
         </Grid>
     </Grid>

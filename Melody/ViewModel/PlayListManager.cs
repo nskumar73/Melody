@@ -24,7 +24,7 @@ namespace Melody.ViewModel
 
 
         /// <summary>
-        /// Fills out the caller's ObservableCollection<PlayList>with all playlists
+        /// Fills out the caller's ObservableCollection<PlayList> with all playlists
         /// </summary>
         /// <param name="displayedPlayLists"></param>
         public static void GetAllPlayLists(
@@ -107,7 +107,10 @@ namespace Melody.ViewModel
             // These calls temporally coupled in order for the
             // All Songs playlist to appear as the first playlist
             createDummyAllSongsPlayList();
-            createSomeDummyPlayLists();
+
+            // This one isn't really necessary anymore
+            // You can create playlists now
+            // createSomeDummyPlayLists();
         }
 
         private static void createDummyAllSongsPlayList()

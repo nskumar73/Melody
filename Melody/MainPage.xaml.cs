@@ -122,6 +122,26 @@ namespace Melody
             // A ViewModel's job is to be the bridge between the View and
             // the Model, that is each ViewModel is specialized to connect
             // specific View(s) with specific Model(s)
+
+
+
+            // Switch to the playlist that was just created
+
+
+            // Hide the playlist creator view
+            PlayListCreationView.Visibility = Visibility.Collapsed;
+            // Show the playlist playback view set to the clicked playlist
+            PlayListPlayBackView.Visibility = Visibility.Visible;
+
+
+            // AddNewPlaylist should either return a (? readonly) handle to the
+            // PlayList that was just created, or it should accept a ref to one
+            // as an out param...I think the latter is a little better in this case
+            // as it mirrors the use of the PlayListManager methods that operate
+            // on collections
+
+            PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist) ;
+
         }
 
 
@@ -191,6 +211,26 @@ namespace Melody
 
             // Who's job should it be (View or ViewModel) to populate
             // ObservableCollection<Song> displayingSongs?
+        }
+
+        private void CreateNewPlayListButton_Click(object sender, RoutedEventArgs e)
+        {
+            // When the user clicks new playlist
+
+            // Load all songs
+            PlayListManager.GetAllSongs(displayingSongs);
+
+            // Clear the playlist name text entry box
+            // TODO: More elegantly handle default offered playlist name
+            // See also: PlayListName_UserInput Text Box in xaml
+            PlayListName_UserInput.Text = "New Playlist N";
+
+            // Hide the playlist playback view
+            PlayListPlayBackView.Visibility = Visibility.Collapsed;
+
+            // Show the playlist creator view
+            PlayListCreationView.Visibility = Visibility.Visible;
+
         }
     }
 }
