@@ -6,13 +6,40 @@ using System.Threading.Tasks;
 
 namespace Melody.Model
 {
-    //Playlist model to define playlist collection (e.g. All Songs)
-    class PlayList
+    /// <summary>
+    /// Model for a playlist that the user can add songs to and select a cover for
+    /// </summary>
+    public sealed class PlayList // : INotifyPropertyChanged (see TODO)
     {
-        //Properties of playlist
+        /// <summary>
+        /// Name of the playlist
+        /// Example: "Disco Hits"
+        /// </summary>
         public string Name { get; set; }
-        public string Cover { get; set; }
-        //Playlistmodel type should be renamed to song
-        public List<PlayListModel> Songs { get; set; }
+
+        /// <summary>
+        /// Path to the image file of the playlist
+        /// Example: "\Assets\Images\Disco Ball.png"
+        /// </summary>
+        public string CoverFilePath { get; set; }
+
+        /// <summary>
+        /// List of songs in the playlist
+        /// </summary>
+        public readonly List<Song> Songs;
+        // TODO: Protect the songs list from arbitrary editing by users of the 
+        // PlayList class
+
+        public PlayList(string name)
+        {
+            Name = name;
+            CoverFilePath = "/Assets/PlaylistCoverPlaceholder.png";
+            Songs = new List<Song>();
+        }
+
+        // TODO: PlayList (or maybe a wrapper around it?)
+        // must implement INotifyPropertyChanged in order for the UI to update
+        // when PlayList objects inside it change state
+        // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged?view=netframework-4.8
     }
 }
