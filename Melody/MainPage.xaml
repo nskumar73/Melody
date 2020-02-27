@@ -48,7 +48,11 @@
                 <ListView x:Name="PlayListMenuSidebarView"
                       ItemsSource ="{x:Bind displayingPlayLists}"
                       IsItemClickEnabled="true"
-                      ItemClick="PlayListMenuSidebarView_ItemClick">
+                      ItemClick="PlayListMenuSidebarView_ItemClick"
+                      SelectionChanged="PlayListMenuSidebarView_SelectionChanged">
+                      <!-- TODO: Figure out the correct way to delete this event
+                           handler (PlayListMenuSidebarView_SelectionChanged) without
+                           getting compiler errors in generated code. -->
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:PlayList">
                             <StackPanel Orientation="Horizontal"

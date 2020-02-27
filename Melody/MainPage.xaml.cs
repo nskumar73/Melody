@@ -140,8 +140,53 @@ namespace Melody
             // as it mirrors the use of the PlayListManager methods that operate
             // on collections
 
-            PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist) ;
+            PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist);
 
+
+
+
+
+            //// Detect the currently selected item
+            //// (can be done from anywhere, not only in the event handler)
+            //var selectedItems = PlayListMenuSidebarView.SelectedItems;
+            //var selectedItem = selectedItems.ToList().First();
+
+            //// Get the first item in the ListView (will be All Songs)
+            //var firstItem = PlayListMenuSidebarView.Items.ToList().First();
+
+
+
+            //// Oh lol, the event handler (that is, this event handler) gets called
+            //// again ?immediately when the selected item changes above
+            //// So, the two lines below are effectively unreachable
+            //// Need to do this experiment from a different context
+
+            //// Again, detect the currently selected item
+            //// (can be done from anywhere, not only in the event handler)
+            //selectedItems = PlayListMenuSidebarView.SelectedItems;
+            //selectedItem = selectedItems.ToList().First();
+
+
+            // OK! I know how to set the selected item of the ListView
+            // based on having a handle to a PlayList in the ListView
+            // in the form of a ListViewItem
+
+
+            // Now need to be able to look up the ListViewItem in the
+            // ListView that corresponds to the PlayList that was just created
+            // when the user clicks the "Save Playlist" button
+
+
+            // Look in the PlayListMenuSidebarView for the ListViewItem
+            // that corresponds to the newPlaylist that was just created
+            // Note that playListItemJustCreated is of type ListViewItem:
+            // https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ListViewItem
+            var playListItemJustCreated = PlayListMenuSidebarView.Items.ToList().First(playListItem => playListItem == newPlaylist);
+
+
+            // Set the current selection of PlayListMenuSidebarView to correspond to the
+            // playlist that was just created
+            PlayListMenuSidebarView.SelectedItem = playListItemJustCreated;
         }
 
 
@@ -232,5 +277,50 @@ namespace Melody
             PlayListCreationView.Visibility = Visibility.Visible;
 
         }
+
+        private void PlayListMenuSidebarView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // TODO: Figure out the correct way to delete this event
+            //               handler (PlayListMenuSidebarView_SelectionChanged) without
+            //               getting compiler errors in generated code.
+
+        }
+
+        // Figuring out how to set the selected item of the PlayListMenuSidebarView
+        //private void PlayListPlayBackView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    // Detect the currently selected item
+        //    // (can be done from anywhere, not only in the event handler)
+        //    var selectedItems = PlayListMenuSidebarView.SelectedItems;
+        //    var selectedItem = selectedItems.ToList().First();
+
+        //    // Get the first item in the ListView (will be All Songs)
+        //    var firstItem = PlayListMenuSidebarView.Items.ToList().First();
+
+        //    // Override the current selection with the first item (All Songs)
+        //    PlayListMenuSidebarView.SelectedItem = firstItem;
+
+        //    // Oh lol, the event handler (that is, this event handler) gets called
+        //    // again ?immediately when the selected item changes above
+        //    // So, the two lines below are effectively unreachable
+        //    // Need to do this experiment from a different context
+
+        //    // Again, detect the currently selected item
+        //    // (can be done from anywhere, not only in the event handler)
+        //    selectedItems = PlayListMenuSidebarView.SelectedItems;
+        //    selectedItem = selectedItems.ToList().First();
+
+
+        //    // OK! I know how to set the selected item of the ListView
+        //    // based on having a handle to a PlayList in the ListView
+        //    // in the form of a ListViewItem
+
+
+        //    // Now need to be able to look up the ListViewItem in the
+        //    // ListView that corresponds to the PlayList that was just created
+        //    // when the user clicks the "Save Playlist" button
+
+
+        //}
     }
 }
