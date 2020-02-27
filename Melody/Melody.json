@@ -1,30 +1,150 @@
-{
-  "AllSongs": [
-    {
-      "Song1": {
-        "Name": "Yesterday",
-        "Genre": "Pop",
-        "Artist": "Beattles",
-        "IconImageUrl": "/Assets/Icon/...",
-        "Link": "/Assets/Audio..."
-      },
-      "Song2": {
-        "Name": "Symphony No. 2 in D major, Op. 36",
-        "Genre": "Classical",
-        "Artist": " Ludwig van Beethoven",
-        "IconImageUrl": "/Assets/Icon/...",
-        "Link": "/Assets/Audio..."
-      },
 
-      "Song3": {
-        "Name": "Bohemian Rhapsody",
-        "Genre": "Rock",
-        "Artist": "Queen",
-        "IconImageUrl": "/Assets/Icon/...",
-        "Link": "/Assets/Audio..."
+[
+  {
+    "id": "Song1",
+    "Name": "Skyfall",
+    "Genre": "Pop",
+    "Artist": "Adele",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Adele - Skyfall.m4a"
+  },
+  {
+    "id": "Song2",
+    "Name": "No Time To Die",
+    "Genre": "Alternative",
+    "Artist": " Billie Eilish",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Billie Eilish - No Time To Die.m4a"
+  },
+  {
+    "id": "Song3",
+    "Name": "I'm Still Standing",
+    "Genre": "Rock",
+    "Artist": "Elton John",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Elton John - I'm Still Standing.m4a"
+  },
+  {
+    "id": "Song4",
+    "Name": "24K Magic",
+    "Genre": "Pop",
+    "Artist": "Bruno Mars",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Bruno Mars - 24K Magic.m4a"
+  },
+  {
+    "id": "Song5",
+    "Name": "Tainted Love",
+    "Genre": "Hard Rock",
+    "Artist": "Marilyn Manson",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Marilyn Manson - Tainted Love.m4a"
+  },
+  {
+    "id": "Song6",
+    "Name": "Baby Blue",
+    "Genre": "Rock",
+    "Artist": "Badfinger",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Badfinger - Baby Blue.m4a"
+  },
+  {
+    "id": "Song7",
+    "Name": "Amarantine",
+    "Genre": "New Age",
+    "Artist": "Enya",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Enya - Amarantine (Album Version).m4a"
+  },
+  {
+    "id": "Song8",
+    "Name": "Make Me Feel",
+    "Genre": "R&B/Soul",
+    "Artist": "Janelle Monae",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Janelle Monae - Make Me.Feel.m4a"
+  },
+  {
+    "id": "Song9",
+    "Name": "Get Ready",
+    "Genre": "Pop",
+    "Artist": "2 Unlimited",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/2 Unlimited - Get Ready (Steve Aoki Instrumental Radio Edit).m4a"
+  },
+  {
+    "id": "Song10",
+    "Name": "How Do You Love Me",
+    "Genre": "Electronic",
+    "Artist": "3LAU",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/3LAU - How You Love Me (feat Bright Lights).m4a"
+  },
+  {
+
+    "id": "Song11",
+    "Name": "Take On Me",
+    "Genre": "Pop",
+    "Artist": "a-ha",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/a-ha - Take On Me.m4a"
+  },
+  {
+    "id": "Song12",
+    "Name": "The Hitman",
+    "Genre": "Dance",
+    "Artist": "A.B. Logic",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/A.B. Logic - The Hitman (7 Mix).m4a"
+  },
+  {
+    "id": "Song13",
+    "Name": "Girlfriend",
+    "Genre": "Pop",
+    "Artist": "Avril Lavigne",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Avril Lavigne - Girlfriend.m4a"
+  },
+  {
+    "id": "Song14",
+    "Name": "Venus",
+    "Genre": "Rock",
+    "Artist": "Bananarama",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Bananarama - Venus.m4a"
+  },
+  {
+    "id": "Song15",
+    "Name": "Gonna Make You Sweat (Everybody Dance Now)",
+    "Genre": "R&B Soul",
+    "Artist": "C+C Music Factory",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/C + C Music Factory - Gonna Make You Sweat (Everybody Dance Now).m4a"
+  },
+  {
+    "id": "Song16",
+    "Name": "The Distance",
+    "Genre": "Alternative",
+    "Artist": "Cake",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Cake - The Distance.m4a"
+  },
+  {
+    "id": "Song17",
+    "Name": "Aurora",
+    "Genre": "House",
+    "Artist": "Funkin Matt",
+    "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+    "AudioFilePath": "/Assets/Funkin Matt - Aurora.m4a"
+  },
+      {
+      "id": "Song18",
+        "Name": "Get Low",
+        "Genre": "Hip Hop/Rap",
+        "Artist": "Lil Jon & The East Side Boyz & Ying Yang Twins",
+        "CoverFilePath": "/Assets/PlaylistCoverPlaceholder.png",
+        "AudioFilePath": "/Assets/Lil Jon & The Eastside Boyz & Ying Yang Twins - Get Low.m4a"
       }
-
-    }
     
-    ]
-}
+]
+
