@@ -181,7 +181,9 @@ namespace Melody
             // that corresponds to the newPlaylist that was just created
             // Note that playListItemJustCreated is of type ListViewItem:
             // https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ListViewItem
-            var playListItemJustCreated = PlayListMenuSidebarView.Items.ToList().First(playListItem => playListItem == newPlaylist);
+            var playListItemJustCreated =
+                PlayListMenuSidebarView.Items.ToList().First(
+                    playListItem => playListItem == newPlaylist);
 
 
             // Set the current selection of PlayListMenuSidebarView to correspond to the
@@ -280,7 +282,7 @@ namespace Melody
 
         private void PlayListMenuSidebarView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // TODO: Figure out the correct way to delete this event
+               // TODO: Figure out the correct way to delete this event
             //               handler (PlayListMenuSidebarView_SelectionChanged) without
             //               getting compiler errors in generated code.
 
