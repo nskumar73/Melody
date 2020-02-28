@@ -14,7 +14,7 @@ namespace Melody.ViewModel
     public static class PlayListManager
     {
         // Guaranteed to be static because it is const, correct?
-        const int DUMMY_SONGS_COUNT = 4;
+        private const int DUMMY_SONGS_COUNT = 4;
 
         private static readonly PlayList allSongsPlayList = new PlayList("All Songs");
         private static readonly List<PlayList> allPlayLists = new List<PlayList>();
@@ -26,34 +26,22 @@ namespace Melody.ViewModel
         /// </summary>
         /// <param name="displayedPlayLists"></param>
         public static void GetAllPlayLists(
-            ObservableCollection<PlayList> displayedPlayLists)
+                                    ObservableCollection<PlayList> ocPlayLists)
         {
-            displayedPlayLists.Clear();
+            // Observer pattern specifies to clear the ObservableCollection 
+            ocPlayLists.Clear();
+
             foreach (var playList in allPlayLists)
             {
-                displayedPlayLists.Add(playList);
+                ocPlayLists.Add(playList);
             }
         }
 
         public static void GetSongsByPlayList(
-            ObservableCollection<Song> ocSongs,
-            PlayList playList)
+                                        ObservableCollection<Song> ocSongs,
+                                        PlayList playList)
         {
-            // Find first match
-            // Should be only match, as PlayList names are intended to be
-            // unique
-            // Maybe upgrading this to be a dictionary, kvp or something?
-            //var playList = allPlayLists.First(pl => pl.Name == playListName);
-
-
-            // string compares 
-
-            // That's the M part of MVVM
-            // When talk about MVC
-            // Model thing on the heap
-            // View reading that to do something
-
-    
+            // Observer pattern specifies to clear the ObservableCollection 
             ocSongs.Clear();
 
             foreach(var song in playList.Songs)
@@ -62,17 +50,15 @@ namespace Melody.ViewModel
             }
         }
 
-
-
         public static void GetAllSongs(ObservableCollection<Song> ocSongs)
         {
+            // Observer pattern specifies to clear the ObservableCollection 
             ocSongs.Clear();
             foreach (var song in allSongsPlayList.Songs)
             {
                 ocSongs.Add(song); 
             }
         }
-               
 
         public static PlayList CreateNewPlayList(
                                         string name, IEnumerable<Song> songs)
@@ -82,7 +68,6 @@ namespace Melody.ViewModel
             allPlayLists.Add(newPlaylist);
             return newPlaylist;
         }
-        
 
         public static void Setup()
         {
@@ -107,6 +92,5 @@ namespace Melody.ViewModel
             // Or not? Maybe need to special-case this?
             allPlayLists.Add(allSongsPlayList);
         }
-
     }
 }

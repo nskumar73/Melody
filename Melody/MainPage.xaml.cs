@@ -34,11 +34,8 @@ namespace Melody
         public MainPage()
         {
             displayingPlayLists = new ObservableCollection<PlayList>();
-
-            //!! Recall that the Songs property on a PlayList is a List<Song>, 
-            // not an ObservableCollection<Song>
             displayingSongs = new ObservableCollection<Song>();
-                        
+
             PlayListManager.Setup();
 
             PlayListManager.GetAllPlayLists(displayingPlayLists);
@@ -51,14 +48,15 @@ namespace Melody
             //mediaPlayerElement1.AutoPlay = true;
         }
 
-
         private enum contentView
         {
             PlayListCreation,
             PlayListPlayBack
-            // TODO: Add option for the import-song-to-library view
+            // TODO: Add element for the upcoming import-song-to-library view
         }
 
+        // Manages the Visibility property on UI elements represented by
+        // content views
         private void switchToContentView(contentView contentView)
         {
             switch (contentView)
@@ -92,7 +90,7 @@ namespace Melody
         {
             string newPlayListName = PlayListName_UserInput.Text;
 
-            // TODO: Figure out how to get the default placeholder text
+            // ** TODO: Figure out how to get the default placeholder text
             // Provided by the control to be the content of the Text field
             // when it is queried by other controls
 
