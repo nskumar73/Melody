@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System;
 using Melody.ViewModel;
 using Windows.Media.Core;
+using System.Text;
 
 namespace Melody
 {
@@ -191,17 +192,134 @@ namespace Melody
             createNewPlayListHelper();
         }
 
+
+        //// Must ensure that the playlist num offered is unique
+        //// that is, it is not represented in the existing playlists
+        //// Check the list of playlists to see if there are any that match
+        //// the default template (whether they were generated, loaded from file
+        //// or the user was funny and typed it)
+        //// If yes, find the highest one and start there
+        //// OR simply skip the taken ones?
+        //// Do the scan when the starting playlists are first loaded
+        //// then handle each new playlist as it is created
+        //// Find next candidate, then check the list for it
+        ////
+        //private static class playListNumOfferManager
+        //{
+        //    // App always starts with a default playlist offer of 1
+        //    private static int currentOffer = 1;
+
+        //    // Using "Peek" method instead of a property with a getter
+        //    // to emphasize that the usual way of accessing the current
+        //    // offer is to collect it as it is created
+        //    public static int PeekCurrentOffer()
+        //    {
+        //        return currentOffer;
+        //    }
+
+        //    public static int GetNewOffer()
+        //    {
+        //        return ++currentOffer;
+
+        //    }
+
+        //    public static int DirectSetNextOffer(int nextOffer)
+        //    { 
+            
+        //    }
+        //}
+
+
+        static readonly string PLAYLIST_NAME_TEMPLATE = "New Playlist ";
+
+        // If input matches playlist name template, return the number of the
+        // template, otherwise return null
+
+        // Good article on nullable value types
+        // https://www.tutorialsteacher.com/csharp/csharp-nullable-types
+        // Note: "int?" is equivelant to "Nullable<int>"
+        private static int? getTemplateMatchNum(string nameToCompare, string template)
+        {
+            // If the name to compare contains exactly one instance of the template
+            var index = nameToCompare.IndexOf(template);
+            if (index >= 0 && index == nameToCompare.LastIndexOf(template))
+            {
+                // Drop the matching template text
+                string parsingString = nameToCompare.Remove(index, template.Length);
+
+                // Ignores leading and trailing whitespace by design
+                if (int.TryParse(parsingString, out int parsedNumber))
+                {
+                    return parsedNumber;
+                }
+            }
+            return null;
+        }
+
+
+        // When the app first loads and also
+        // When the user clicks the new playlist button
         private void createNewPlayListHelper()
         {
             // Display all songs
             PlayListManager.GetAllSongs(displayingSongs);
-    
+
+
+            // Do this once when the app loads
+            // For each playlist in all of the playlists
+            // Find matches to the default pattern
+            // If find a match, note its number
+            // Keep track of what the highest number is
+            // That's where we will pick up with the offers
+
+            // Seems like the View should ask the ViewModel to do this
+            // Doesn't make senese for the view to do this with the
+            // ObservableCollection<PlayList>, right?
+
+            // Well, for now:
+
+
+
+            // Right now we're figuring out what default playlist name to offer to the user
+            // Find the default playlist name with the biggest number N
+            // Offer a name ending with the next number (N + 1)
+            int? largestPlayListNumMatch = null;
+            foreach (var playList in displayingPlayLists)
+            {
+                // If the playlist name matches the template text
+                // and its number is the new largest match
+                int? templateMatchNum = getTemplateMatchNum(playList.Name, PLAYLIST_NAME_TEMPLATE);
+                if (templateMatchNum.HasValue && templateMatchNum.Value > largestPlayListNumMatch.GetValueOrDefault())
+                                                                            // 0 is the default for int if int? is null
+                {
+                    // Store the new largest match
+                    largestPlayListNumMatch = templateMatchNum.Value;
+                }
+            }
+            // Now either largestPlayListNumMatch is the number of the largest match or it is still null
+
+            // If null, that means that there were no matches and we offer the starting default of 1
+            // If not null, (rather, if N), then we offer N+1
+
+
+
 
 
 
             // ***** TODO: More elegantly handle default offered playlist name
             // See also: PlayListName_UserInput Text Box in xaml
-            PlayListName_UserInput.Text = "New Playlist N";
+            var playListNameNumToOffer = (largestPlayListNumMatch.HasValue ? largestPlayListNumMatch.Value + 1 : 1);
+
+            StringBuilder playListNameToOfferSB = new StringBuilder(PLAYLIST_NAME_TEMPLATE);
+            playListNameToOfferSB.Append(playListNameNumToOffer);
+
+            PlayListName_UserInput.Text = playListNameToOfferSB.ToString();
+
+
+
+            // Now, before refactoring, does it work?
+
+
 
             switchToContentView(contentView.PlayListCreation);
         }

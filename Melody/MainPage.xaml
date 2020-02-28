@@ -38,7 +38,7 @@
             page real estate. PlayListCreationView is Visible by default,
             PlayListPlayBackView is Collapsed/hidden by default, these visible
             states are managed in MainPage event handlers -->
-            <StackPanel> <!-- TODO: Probably make this a RelativePanel?
+            <StackPanel> <!-- TODO: Make this a RelativePanel instead?
                 Want the Create New Playlist button to inherit width from
                 the ListView beneath it-->
                 <Button x:Name="CreateNewPlayListButton"
