@@ -67,7 +67,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
-
             <!--#endregion-->
 
             <!--#region PlayListCreationView-->

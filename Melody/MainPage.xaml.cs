@@ -44,8 +44,7 @@ namespace Melody
             PlayListManager.GetAllPlayLists(displayingPlayLists);
             PlayListManager.GetAllSongs(displayingSongs);
 
-            this.InitializeComponent();
-
+            InitializeComponent();
 
             //MediaPlayerElement mediaPlayerElement1 = new MediaPlayerElement();
             //mediaPlayerElement1.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Media/video1.mp4"));
@@ -82,274 +81,113 @@ namespace Melody
             }
         }
 
-        private void PlayListSongSelectionEditView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlayListSongSelectionEditView_SelectionChanged(
+                                    object sender, SelectionChangedEventArgs e)
         {
-            // Wait. Maybe we don't need to do anything when the selection
-            // changes in the playlist editor list view.
-            // I think we only need to do something about the state of the
-            // selection when the user saves their playlist
+            // TODO: Figure out the correct way to delete this event
+            //       handler without getting compiler errors in generated code.
         }
 
         private void PlayListSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // What does sender refer to?
-            // This never came up in Kal's example
-            // e is going to refer to the button itself, I think
-            // Not useful for deciding what songs to add to the new playlist
-
-            // TODO: Can we ask the ListView which songs are selected at this point, or
-            // do we have to keep track of which ones are selected/deselected as the
-            // user is selecting songs?
-
+            string newPlayListName = PlayListName_UserInput.Text;
 
             // TODO: Figure out how to get the default placeholder text
             // Provided by the control to be the content of the Text field
             // when it is queried by other controls
-            var newPlaylist = new PlayList(PlayListName_UserInput.Text);
+
             // I think the answer is to set the Text property directly in Xaml
             // instead of using the PlaceholderText property
 
-            foreach (var song in PlayListSongSelectionEditView.SelectedItems)
-            {
-                // We know that song is a Song because PlayListSongSelectionEditView
-                // is bound to a List<Song>
-                // Type cast song to Song so that it can be added to the list of
-                // Song on newPlaylist
-                newPlaylist.Songs.Add((Song)song);
-            }
-
-            // TODO: Have the ViewModel make this playlsit
-            // give them the list of songs and the name that the user specified
 
 
+            
+            // Create an IEnumerable<Song> that we can pass to the PlayListManager
+            // so that it can iterate through the list of selected songs without
+            // needing to know about 
+            IEnumerable<Song> selectedSongs =
+                PlayListSongSelectionEditView.SelectedItems.Cast<Song>();
+            // Following this example for how to use the Cast method on IEnumerable:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.cast?view=netframework-4.8
+            // See also the ListViewBase.SelectedItems property:
+            // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.listviewbase.selecteditems
 
-            // DONE: Fix the fact that here we are adding the new playlist directly to the 
-            // ObservableCollection<PlayList>
-            // Only the ViewModel should write to this collection
-            // In the Xamarin example, how does the View pass data to the
-            // ViewModel?
-            // Seems like the View (that is, right here in this event handler)
-            // should call a method on the ViewModel class and passing it the
-            // new playlist (then not keeping a reference to that new playlist
-            // here in the View
-            // ViewModel should be responsible for keeping track of the Playlist
-            // from that point forward and (as relevant) populating it in the
-            // ObservableCollection<PlayList> collection
-            PlayListManager.AddNewPlayList(newPlaylist);
 
-            // Update the View
+            // Pass the user input about the new playlist to the ViewModel
+            // so the PlayList object to be created and stored/managed on the
+            // back end
+            // Store a reference to the new PlayList, we'll use it to
+            // populate the playlist's songs into the view (avoiding doing
+            // a lookup by playlist string name)
+            var newPlaylist =
+                PlayListManager.CreateNewPlayList(newPlayListName, selectedSongs);
+
+            // Re-populate the view's playlist collection
+            // to reflect the new playlist
             PlayListManager.GetAllPlayLists(displayingPlayLists);
 
-
-            // TODO: Find out what the observer pattern says about
-            // the View's ObservableCollection being updated directly by the ViewModel
-
-
-            // ** QUESTION/IDEA: ?? Let the ViewModel keep a handle to the
-            // View's ObservableCollection so that it can update it
-            // when relevant...use case is for if playlists change
-            // for some reason other than because of a UI event
-            // A ViewModel's job is to be the bridge between the View and
-            // the Model, that is each ViewModel is specialized to connect
-            // specific View(s) with specific Model(s)
-
-
-
-            // Switch to the playlist that was just created
-            switchToContentView(contentView.PlayListPlayBack);
-
-
-
-            // AddNewPlaylist should either return a (? readonly) handle to the
-            // PlayList that was just created, or it should accept a ref to one
-            // as an out param...I think the latter is a little better in this case
-            // as it mirrors the use of the PlayListManager methods that operate
-            // on collections
-
+            // Prepare the view's songs collection to be the songs from the
+            // new playlist
             PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist);
 
+            // Switch to the songs view
+            switchToContentView(contentView.PlayListPlayBack);
 
-
-
-
-            //// Detect the currently selected item
-            //// (can be done from anywhere, not only in the event handler)
-            //var selectedItems = PlayListMenuSidebarView.SelectedItems;
-            //var selectedItem = selectedItems.ToList().First();
-
-            //// Get the first item in the ListView (will be All Songs)
-            //var firstItem = PlayListMenuSidebarView.Items.ToList().First();
-
-
-
-            //// Oh lol, the event handler (that is, this event handler) gets called
-            //// again ?immediately when the selected item changes above
-            //// So, the two lines below are effectively unreachable
-            //// Need to do this experiment from a different context
-
-            //// Again, detect the currently selected item
-            //// (can be done from anywhere, not only in the event handler)
-            //selectedItems = PlayListMenuSidebarView.SelectedItems;
-            //selectedItem = selectedItems.ToList().First();
-
-
-            // OK! I know how to set the selected item of the ListView
-            // based on having a handle to a PlayList in the ListView
-            // in the form of a ListViewItem
-
-
-            // Now need to be able to look up the ListViewItem in the
-            // ListView that corresponds to the PlayList that was just created
-            // when the user clicks the "Save Playlist" button
-
-
-            // Look in the PlayListMenuSidebarView for the ListViewItem
-            // that corresponds to the newPlaylist that was just created
-            // Note that playListItemJustCreated is of type ListViewItem:
-            // https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ListViewItem
-            var playListItemJustCreated =
-                PlayListMenuSidebarView.Items.ToList().First(
-                    playListItem => playListItem == newPlaylist);
-
-
-            // Set the current selection of PlayListMenuSidebarView to correspond to the
-            // playlist that was just created
-            PlayListMenuSidebarView.SelectedItem = playListItemJustCreated;
+            // Select/highlight the new playlist in the left sidebar view
+            selectPlayListInMenuSidebarView(newPlaylist);
         }
 
+        private void selectPlayListInMenuSidebarView(PlayList playList)
+        {
+            // Look in the PlayListMenuSidebarView for the ListViewItem
+            // that corresponds to the playList
+            var playListItem = PlayListMenuSidebarView.Items.ToList().First(
+                                     item => item == playList);
+            // Note that playListItem is of type ListViewItem:
+            // https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ListViewItem
+
+            // Set the current selection of PlayListMenuSidebarView to correspond to the
+            // PlayList that corresponds to playListItem
+            PlayListMenuSidebarView.SelectedItem = playListItem;
+        }
 
         // When a playlist item is clicked
-        private void PlayListMenuSidebarView_ItemClick(object sender, ItemClickEventArgs e)
+        private void PlayListMenuSidebarView_ItemClick(
+                                        object sender, ItemClickEventArgs e)
         {
             var clickedPlayList = (PlayList)e.ClickedItem;
+
             // Populate the ObservableCollection<Song> displayingSongs with
             // the songs in the specified PlayList
-            //PlayListManager.GetSongsByPlayList(displayingSongs, clickedPlayList.Name);
-
-
             PlayListManager.GetSongsByPlayList(displayingSongs, clickedPlayList);
-
-            // View needs a list of the stuff that the view is supposed to display
-            // The view is not supposed to generate that list
-            // Even if it's trivial
-
-
-            //10k songs in it
-            // ui that is paginated
-            // give me page 8 ofthis list
-            // not doign that in the ui thread
-
-
-            // another reason
-            // dynamic playlist possible
-            // all songs might be a dynamic playlist
-
-            // songmanager has handle to all songs
-            // new class that uses the 
-
-            // it may not have a list of songs
-            // when you ask me for a list of all the songs
-            // I ask the songmanager for all the songs
-            // go to sound manager
-
-            // dynamic playlist random sort
-
-
-
-            //displayingSongs.Clear();
-
-            //foreach (var song in clickedPlayList.Songs)
-            //{
-            //    displayingSongs.Add(song);
-            //}
-
 
             // Show the playlist playback view set to the clicked playlist
             switchToContentView(contentView.PlayListPlayBack);
-
-
-
-            // If we ask the/a ViewModel to fill out the songs, we need to tell them
-            // which songs somehow...that is, which playlist
-            // Options include:
-            // PlayList by its string Name (presuming that we don't allow duplicate names)
-            // Reference to the PlayList directly...
-
-            // MVVM probably wants us to communicate about the PlayList by Name
-            // *sigh* is there a better way to do this and still be honoring
-            // MVVM?
-
-            // These aren't simply equivelant PlayList objects, they are
-            // guaranteed to be exactly the same PlayList object, correct?
-            // Makes best sense to...
-
-            // Who's job should it be (View or ViewModel) to populate
-            // ObservableCollection<Song> displayingSongs?
         }
 
-        private void CreateNewPlayListButton_Click(object sender, RoutedEventArgs e)
+        // When the user clicks new playlist button
+        private void CreateNewPlayListButton_Click(
+                                        object sender, RoutedEventArgs e)
         {
-            // When the user clicks new playlist
-
             // Load all songs
             PlayListManager.GetAllSongs(displayingSongs);
 
             // Clear the playlist name text entry box
+
             // TODO: More elegantly handle default offered playlist name
             // See also: PlayListName_UserInput Text Box in xaml
             PlayListName_UserInput.Text = "New Playlist N";
 
-
             switchToContentView(contentView.PlayListCreation);
-
-
         }
 
-        private void PlayListMenuSidebarView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlayListMenuSidebarView_SelectionChanged(
+                                    object sender, SelectionChangedEventArgs e)
         {
-               // TODO: Figure out the correct way to delete this event
+            // TODO: Figure out the correct way to delete this event
             //               handler (PlayListMenuSidebarView_SelectionChanged) without
             //               getting compiler errors in generated code.
 
         }
-
-        // Figuring out how to set the selected item of the PlayListMenuSidebarView
-        //private void PlayListPlayBackView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    // Detect the currently selected item
-        //    // (can be done from anywhere, not only in the event handler)
-        //    var selectedItems = PlayListMenuSidebarView.SelectedItems;
-        //    var selectedItem = selectedItems.ToList().First();
-
-        //    // Get the first item in the ListView (will be All Songs)
-        //    var firstItem = PlayListMenuSidebarView.Items.ToList().First();
-
-        //    // Override the current selection with the first item (All Songs)
-        //    PlayListMenuSidebarView.SelectedItem = firstItem;
-
-        //    // Oh lol, the event handler (that is, this event handler) gets called
-        //    // again ?immediately when the selected item changes above
-        //    // So, the two lines below are effectively unreachable
-        //    // Need to do this experiment from a different context
-
-        //    // Again, detect the currently selected item
-        //    // (can be done from anywhere, not only in the event handler)
-        //    selectedItems = PlayListMenuSidebarView.SelectedItems;
-        //    selectedItem = selectedItems.ToList().First();
-
-
-        //    // OK! I know how to set the selected item of the ListView
-        //    // based on having a handle to a PlayList in the ListView
-        //    // in the form of a ListViewItem
-
-
-        //    // Now need to be able to look up the ListViewItem in the
-        //    // ListView that corresponds to the PlayList that was just created
-        //    // when the user clicks the "Save Playlist" button
-
-
-        //}
-
-
     }
 }
