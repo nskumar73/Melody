@@ -52,6 +52,36 @@ namespace Melody
             //mediaPlayerElement1.AutoPlay = true;
         }
 
+
+        private enum contentView
+        {
+            PlayListCreation,
+            PlayListPlayBack
+            // TODO: Add option for the import-song-to-library view
+        }
+
+        private void switchToContentView(contentView contentView)
+        {
+            switch (contentView)
+            {
+                case contentView.PlayListCreation:
+                    // Hide the playlist playback view
+                    PlayListPlayBackView.Visibility = Visibility.Collapsed;
+                    // Show the playlist creator view
+                    PlayListCreationView.Visibility = Visibility.Visible;
+
+                    break;
+                case contentView.PlayListPlayBack:
+                    // Hide the playlist creator view
+                    PlayListCreationView.Visibility = Visibility.Collapsed;
+                    // Show the playlist playback view set to the clicked playlist
+                    PlayListPlayBackView.Visibility = Visibility.Visible;
+
+                    break;
+                    // TODO: Add option for the import-song-to-library view
+            }
+        }
+
         private void PlayListSongSelectionEditView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Wait. Maybe we don't need to do anything when the selection
@@ -126,12 +156,8 @@ namespace Melody
 
 
             // Switch to the playlist that was just created
+            switchToContentView(contentView.PlayListPlayBack);
 
-
-            // Hide the playlist creator view
-            PlayListCreationView.Visibility = Visibility.Collapsed;
-            // Show the playlist playback view set to the clicked playlist
-            PlayListPlayBackView.Visibility = Visibility.Visible;
 
 
             // AddNewPlaylist should either return a (? readonly) handle to the
@@ -202,7 +228,7 @@ namespace Melody
 
 
             PlayListManager.GetSongsByPlayList(displayingSongs, clickedPlayList);
-            
+
             // View needs a list of the stuff that the view is supposed to display
             // The view is not supposed to generate that list
             // Even if it's trivial
@@ -237,10 +263,11 @@ namespace Melody
             //    displayingSongs.Add(song);
             //}
 
-            // Hide the playlist creator view
-            PlayListCreationView.Visibility = Visibility.Collapsed;
+
             // Show the playlist playback view set to the clicked playlist
-            PlayListPlayBackView.Visibility = Visibility.Visible;
+            switchToContentView(contentView.PlayListPlayBack);
+
+
 
             // If we ask the/a ViewModel to fill out the songs, we need to tell them
             // which songs somehow...that is, which playlist
@@ -272,11 +299,9 @@ namespace Melody
             // See also: PlayListName_UserInput Text Box in xaml
             PlayListName_UserInput.Text = "New Playlist N";
 
-            // Hide the playlist playback view
-            PlayListPlayBackView.Visibility = Visibility.Collapsed;
 
-            // Show the playlist creator view
-            PlayListCreationView.Visibility = Visibility.Visible;
+            switchToContentView(contentView.PlayListCreation);
+
 
         }
 
@@ -324,5 +349,7 @@ namespace Melody
 
 
         //}
+
+
     }
 }
