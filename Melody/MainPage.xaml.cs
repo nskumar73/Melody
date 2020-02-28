@@ -33,15 +33,19 @@ namespace Melody
 
         public MainPage()
         {
+
+            InitializeComponent();
             displayingPlayLists = new ObservableCollection<PlayList>();
             displayingSongs = new ObservableCollection<Song>();
 
             PlayListManager.Setup();
 
             PlayListManager.GetAllPlayLists(displayingPlayLists);
-            PlayListManager.GetAllSongs(displayingSongs);
 
-            InitializeComponent();
+            // Immediately enter playlist creation
+            createNewPlayListHelper();
+
+
 
             //MediaPlayerElement mediaPlayerElement1 = new MediaPlayerElement();
             //mediaPlayerElement1.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Media/video1.mp4"));
@@ -88,6 +92,23 @@ namespace Melody
 
         private void PlayListSaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: Figure out why ShowMode is not working with Flyout, that is,
+            // it is not showing up as a member of Flyout for some reason
+            //((Button)sender).Flyout.ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway;
+
+            // If the user has neglected to select any songs for their playlist
+            if (PlayListSongSelectionEditView.SelectedItems.Count == 0)
+            {
+                // Show the flyout explaining why they can't save the playlist
+                FlyoutBase.ShowAttachedFlyout(PlayListSaveButton);
+                // See: "How to create a flyout"
+                // https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts#how-to-create-a-flyout
+
+                // ABORT saving the playlist
+                return;
+            }
+
+
             string newPlayListName = PlayListName_UserInput.Text;
 
             // ** TODO: Figure out how to get the default placeholder text
@@ -167,12 +188,18 @@ namespace Melody
         private void CreateNewPlayListButton_Click(
                                         object sender, RoutedEventArgs e)
         {
-            // Load all songs
+            createNewPlayListHelper();
+        }
+
+        private void createNewPlayListHelper()
+        {
+            // Display all songs
             PlayListManager.GetAllSongs(displayingSongs);
+    
 
-            // Clear the playlist name text entry box
 
-            // TODO: More elegantly handle default offered playlist name
+
+            // ***** TODO: More elegantly handle default offered playlist name
             // See also: PlayListName_UserInput Text Box in xaml
             PlayListName_UserInput.Text = "New Playlist N";
 
