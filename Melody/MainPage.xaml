@@ -114,7 +114,15 @@
                                See also: PlayListSaveButton_Click event handler -->
                     <TextBox x:Name="PlayListName_UserInput"
                              PlaceholderText="XAML PLACEHOLDER TEXT"
-                             Padding="5"/>
+                             Padding="5">
+                        <FlyoutBase.AttachedFlyout>
+                            <!-- Setting LightDismissOverlayMode is a hack for not getting
+                                 ShowMode to work. -->
+                            <Flyout LightDismissOverlayMode="On">
+                                <TextBlock Text="This playlist name is already in use. Enter a unique playlist name."/>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </TextBox>
                     <Button x:Name="PlayListSaveButton"
                             Content="Save Playlist"
                             Click="PlayListSaveButton_Click"
@@ -161,6 +169,11 @@
             <!--#endregion-->
 
 
+            
+            
+            
+            
+            
 
             <!--#region MediaPlayerBottomBar -->
             <MediaPlayerElement Grid.Row="1"

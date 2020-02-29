@@ -46,8 +46,6 @@ namespace Melody
             // Immediately enter playlist creation
             createNewPlayListHelper();
 
-
-
             //MediaPlayerElement mediaPlayerElement1 = new MediaPlayerElement();
             //mediaPlayerElement1.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Media/video1.mp4"));
             //mediaPlayerElement1.AutoPlay = true;
@@ -100,17 +98,51 @@ namespace Melody
             // If the user has neglected to select any songs for their playlist
             if (PlayListSongSelectionEditView.SelectedItems.Count == 0)
             {
-                // Show the flyout explaining why they can't save the playlist
+                // Show the flyout explaining why the playlist can't be saved
                 FlyoutBase.ShowAttachedFlyout(PlayListSaveButton);
                 // See: "How to create a flyout"
                 // https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts#how-to-create-a-flyout
 
                 // ABORT saving the playlist
+                // (Remain in PlayListCreationView, retaining the user input or
+                // default offered playlist name)
                 return;
             }
 
+            // Ignore leading and trailing whtiespace from user input
+            // Note that this is not just for comparison,
+            // we are disallowing leading and trailing whitespace from playlist names
+            // because that is awkward and potentially confusing
+            string newPlayListNameUserInput = PlayListName_UserInput.Text.Trim();
 
-            string newPlayListName = PlayListName_UserInput.Text;
+            // Get a handle to the observable collection that we can use with a LINQ query
+            IEnumerable<PlayList> ieDisplayingPlayLists = displayingPlayLists.Cast<PlayList>();
+
+            bool playListNameAlreadyUsed = ieDisplayingPlayLists.ToList().Exists(playList =>
+                        String.Equals(playList.Name, newPlayListNameUserInput));
+
+            if (playListNameAlreadyUsed)
+            {
+                // Show the flyout explaining why the playlist can't be saved
+                FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
+
+                // ABORT saving the playlist
+                // (Remain in PlayListCreationView, retaining any user-selected songs)
+                return;
+            }
+                
+      
+            
+
+
+
+            //IEnumerable<Type> symbol = TheCollection.Cast<Type>();
+            // Optionally, if the IEnumberable<Type> doesn't do it for you:
+            //var list = new List<Type>(symbol);
+            // Converting observable collection back to regular collection
+            // https://stackoverflow.com/a/1658656
+
+
 
             // ** TODO: Figure out how to get the default placeholder text
             // Provided by the control to be the content of the Text field
@@ -121,10 +153,9 @@ namespace Melody
 
 
 
-            
+
             // Create an IEnumerable<Song> that we can pass to the PlayListManager
-            // so that it can iterate through the list of selected songs without
-            // needing to know about 
+            // so that it can iterate through the list of selected songs 
             IEnumerable<Song> selectedSongs =
                 PlayListSongSelectionEditView.SelectedItems.Cast<Song>();
             // Following this example for how to use the Cast method on IEnumerable:
@@ -140,7 +171,7 @@ namespace Melody
             // populate the playlist's songs into the view (avoiding doing
             // a lookup by playlist string name)
             var newPlaylist =
-                PlayListManager.CreateNewPlayList(newPlayListName, selectedSongs);
+                PlayListManager.CreateNewPlayList(newPlayListNameUserInput, selectedSongs);
 
             // Re-populate the view's playlist collection
             // to reflect the new playlist
@@ -176,6 +207,7 @@ namespace Melody
                                         object sender, ItemClickEventArgs e)
         {
             var clickedPlayList = (PlayList)e.ClickedItem;
+
 
             // Populate the ObservableCollection<Song> displayingSongs with
             // the songs in the specified PlayList
@@ -261,23 +293,12 @@ namespace Melody
         // When the user clicks the new playlist button
         private void createNewPlayListHelper()
         {
-            // Display all songs
-            PlayListManager.GetAllSongs(displayingSongs);
 
-
-            // Do this once when the app loads
-            // For each playlist in all of the playlists
-            // Find matches to the default pattern
-            // If find a match, note its number
-            // Keep track of what the highest number is
-            // That's where we will pick up with the offers
-
+            // TODO: Refactor determining what default playlist name to offer
+            // Either into another helper fn or into the ViewModel
             // Seems like the View should ask the ViewModel to do this
             // Doesn't make senese for the view to do this with the
             // ObservableCollection<PlayList>, right?
-
-            // Well, for now:
-
 
 
             // Right now we're figuring out what default playlist name to offer to the user
@@ -302,25 +323,23 @@ namespace Melody
             // If not null, (rather, if N), then we offer N+1
 
 
-
-
-
-
-            // ***** TODO: More elegantly handle default offered playlist name
-            // See also: PlayListName_UserInput Text Box in xaml
             var playListNameNumToOffer = (largestPlayListNumMatch.HasValue ? largestPlayListNumMatch.Value + 1 : 1);
 
             StringBuilder playListNameToOfferSB = new StringBuilder(PLAYLIST_NAME_TEMPLATE);
             playListNameToOfferSB.Append(playListNameNumToOffer);
 
+
+
+
+
+
+            // Write the default playlist offer into the user input text box
             PlayListName_UserInput.Text = playListNameToOfferSB.ToString();
 
+            // Display all songs
+            PlayListManager.GetAllSongs(displayingSongs);
 
-
-            // Now, before refactoring, does it work?
-
-
-
+            // Finally, show the PlayListCreationView
             switchToContentView(contentView.PlayListCreation);
         }
 
