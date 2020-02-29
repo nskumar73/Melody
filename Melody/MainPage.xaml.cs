@@ -98,7 +98,9 @@ namespace Melody
             // If the user has neglected to select any songs for their playlist
             if (PlayListSongSelectionEditView.SelectedItems.Count == 0)
             {
-                // Show the flyout explaining why the playlist can't be saved
+                // Show a flyout explaining why the playlist can't be saved
+                FlyoutText_for_PlayListSaveButton.Text =
+                    "Choose some songs first.";
                 FlyoutBase.ShowAttachedFlyout(PlayListSaveButton);
                 // See: "How to create a flyout"
                 // https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts#how-to-create-a-flyout
@@ -109,11 +111,28 @@ namespace Melody
                 return;
             }
 
+
+
             // Ignore leading and trailing whtiespace from user input
-            // Note that this is not just for comparison,
-            // we are disallowing leading and trailing whitespace from playlist names
-            // because that is awkward and potentially confusing
+            // Note that this is not just for comparison;
+            // disallow leading and trailing whitespace from playlist names
+            // because that is awkward, confusing and probably unintentional
             string newPlayListNameUserInput = PlayListName_UserInput.Text.Trim();
+
+
+            // If user deleted the default playlist offer text, leaving the input empty
+            if (newPlayListNameUserInput.Length == 0)
+            {
+                // Show a flyout explaining why the playlist can't be saved
+                FlyoutText_for_PlayListName_UserInput.Text =
+                    "Please set a name for your playlist.";
+                FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
+
+                // ABORT saving the playlist
+                // (Remain in PlayListCreationView, retaining any user-selected songs)
+                return;
+            }
+
 
             // Get a handle to the observable collection that we can use with a LINQ query
             IEnumerable<PlayList> ieDisplayingPlayLists = displayingPlayLists.Cast<PlayList>();
@@ -123,14 +142,16 @@ namespace Melody
 
             if (playListNameAlreadyUsed)
             {
-                // Show the flyout explaining why the playlist can't be saved
+                // Show a flyout explaining why the playlist can't be saved
+                FlyoutText_for_PlayListName_UserInput.Text =
+                    "Playlist name is already taken. Please use a new name.";
                 FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
 
                 // ABORT saving the playlist
                 // (Remain in PlayListCreationView, retaining any user-selected songs)
                 return;
             }
-                
+             
       
             
 
@@ -225,44 +246,9 @@ namespace Melody
         }
 
 
-        //// Must ensure that the playlist num offered is unique
-        //// that is, it is not represented in the existing playlists
-        //// Check the list of playlists to see if there are any that match
-        //// the default template (whether they were generated, loaded from file
-        //// or the user was funny and typed it)
-        //// If yes, find the highest one and start there
-        //// OR simply skip the taken ones?
-        //// Do the scan when the starting playlists are first loaded
-        //// then handle each new playlist as it is created
-        //// Find next candidate, then check the list for it
-        ////
-        //private static class playListNumOfferManager
-        //{
-        //    // App always starts with a default playlist offer of 1
-        //    private static int currentOffer = 1;
-
-        //    // Using "Peek" method instead of a property with a getter
-        //    // to emphasize that the usual way of accessing the current
-        //    // offer is to collect it as it is created
-        //    public static int PeekCurrentOffer()
-        //    {
-        //        return currentOffer;
-        //    }
-
-        //    public static int GetNewOffer()
-        //    {
-        //        return ++currentOffer;
-
-        //    }
-
-        //    public static int DirectSetNextOffer(int nextOffer)
-        //    { 
-            
-        //    }
-        //}
 
 
-        static readonly string PLAYLIST_NAME_TEMPLATE = "New Playlist ";
+        const string PLAYLIST_NAME_TEMPLATE = "New Playlist ";
 
         // If input matches playlist name template, return the number of the
         // template, otherwise return null

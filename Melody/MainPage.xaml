@@ -113,13 +113,13 @@
                                already in use by a current playlist
                                See also: PlayListSaveButton_Click event handler -->
                     <TextBox x:Name="PlayListName_UserInput"
-                             PlaceholderText="XAML PLACEHOLDER TEXT"
+                             PlaceholderText="Enter Playlist Name"
                              Padding="5">
                         <FlyoutBase.AttachedFlyout>
                             <!-- Setting LightDismissOverlayMode is a hack for not getting
                                  ShowMode to work. -->
                             <Flyout LightDismissOverlayMode="On">
-                                <TextBlock Text="This playlist name is already in use. Enter a unique playlist name."/>
+                                <TextBlock x:Name="FlyoutText_for_PlayListName_UserInput"/>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
                     </TextBox>
@@ -136,7 +136,7 @@
                             <!-- Setting LightDismissOverlayMode is a hack for not getting
                                  ShowMode to work. -->
                             <Flyout LightDismissOverlayMode="On">
-                                <TextBlock Text="Choose some songs first."/>
+                                <TextBlock x:Name="FlyoutText_for_PlayListSaveButton"/>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
                     </Button>
