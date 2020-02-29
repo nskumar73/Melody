@@ -38,7 +38,7 @@
             page real estate. PlayListCreationView is Visible by default,
             PlayListPlayBackView is Collapsed/hidden by default, these visible
             states are managed in MainPage event handlers -->
-            <StackPanel> <!-- TODO: Probably make this a RelativePanel?
+            <StackPanel> <!-- TODO: Make this a RelativePanel instead?
                 Want the Create New Playlist button to inherit width from
                 the ListView beneath it-->
                 <Button x:Name="CreateNewPlayListButton"
@@ -48,7 +48,11 @@
                 <ListView x:Name="PlayListMenuSidebarView"
                       ItemsSource ="{x:Bind displayingPlayLists}"
                       IsItemClickEnabled="true"
-                      ItemClick="PlayListMenuSidebarView_ItemClick">
+                      ItemClick="PlayListMenuSidebarView_ItemClick"
+                      SelectionChanged="PlayListMenuSidebarView_SelectionChanged">
+                      <!-- TODO: Figure out the correct way to delete this event
+                           handler (PlayListMenuSidebarView_SelectionChanged) without
+                           getting compiler errors in generated code. -->
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:PlayList">
                             <StackPanel Orientation="Horizontal"
@@ -63,7 +67,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
-
             <!--#endregion-->
 
             <!--#region PlayListCreationView-->
@@ -71,7 +74,7 @@
                         Grid.Column="1"
                         Orientation="Vertical"
                         Visibility="Visible">
-                <TextBlock Text="Select songs for your new playlist:"
+                <TextBlock Text="Select one or more songs for your playlist:"
                            HorizontalAlignment="Center"/>
 
                 <!-- Recall that the Songs on a PlayList is a List<> not an
@@ -110,12 +113,25 @@
                                already in use by a current playlist
                                See also: PlayListSaveButton_Click event handler -->
                     <TextBox x:Name="PlayListName_UserInput"
-                             PlaceholderText="New Playlist 1"
+                             PlaceholderText="XAML PLACEHOLDER TEXT"
                              Padding="5"/>
                     <Button x:Name="PlayListSaveButton"
                             Content="Save Playlist"
                             Click="PlayListSaveButton_Click"
-                            Padding="5"/>
+                            Padding="5">
+                        <!-- Flyout is for error state to explain to user why
+                             save button is disabled if it is disabled
+                             using FlyoutBase.AttachedFlyout instead of
+                             Button.Flyout so we can control when the flyout
+                             appears -->
+                        <FlyoutBase.AttachedFlyout>
+                            <!-- Setting LightDismissOverlayMode is a hack for not getting
+                                 ShowMode to work. -->
+                            <Flyout LightDismissOverlayMode="On">
+                                <TextBlock Text="Choose some songs first."/>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </Button>
                 </StackPanel>
 
             </StackPanel>
