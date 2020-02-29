@@ -91,122 +91,13 @@ namespace Melody
 
         private void PlayListSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Figure out why ShowMode is not working with Flyout, that is,
-            // it is not showing up as a member of Flyout for some reason
-            //((Button)sender).Flyout.ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway;
 
-            // If the user has neglected to select any songs for their playlist
-            if (PlayListSongSelectionEditView.SelectedItems.Count == 0)
-            {
-                // Show a flyout explaining why the playlist can't be saved
-                FlyoutText_for_PlayListSaveButton.Text =
-                    "Choose some songs first.";
-                FlyoutBase.ShowAttachedFlyout(PlayListSaveButton);
-                // See: "How to create a flyout"
-                // https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts#how-to-create-a-flyout
-
-                // ABORT saving the playlist
-                // (Remain in PlayListCreationView, retaining the user input or
-                // default offered playlist name)
-                return;
-            }
+            // Share playlist save logic with pressing Enter from the
+            // user input TextBox
+            newPlayListSaveHelper();
 
 
 
-            // Ignore leading and trailing whtiespace from user input
-            // Note that this is not just for comparison;
-            // disallow leading and trailing whitespace from playlist names
-            // because that is awkward, confusing and probably unintentional
-            string newPlayListNameUserInput = PlayListName_UserInput.Text.Trim();
-
-
-            // If user deleted the default playlist offer text, leaving the input empty
-            if (newPlayListNameUserInput.Length == 0)
-            {
-                // Show a flyout explaining why the playlist can't be saved
-                FlyoutText_for_PlayListName_UserInput.Text =
-                    "Please set a name for your playlist.";
-                FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
-
-                // ABORT saving the playlist
-                // (Remain in PlayListCreationView, retaining any user-selected songs)
-                return;
-            }
-
-
-            // Get a handle to the observable collection that we can use with a LINQ query
-            IEnumerable<PlayList> ieDisplayingPlayLists = displayingPlayLists.Cast<PlayList>();
-
-            bool playListNameAlreadyUsed = ieDisplayingPlayLists.ToList().Exists(playList =>
-                        String.Equals(playList.Name, newPlayListNameUserInput));
-
-            if (playListNameAlreadyUsed)
-            {
-                // Show a flyout explaining why the playlist can't be saved
-                FlyoutText_for_PlayListName_UserInput.Text =
-                    "Playlist name is already taken. Please use a new name.";
-                FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
-
-                // ABORT saving the playlist
-                // (Remain in PlayListCreationView, retaining any user-selected songs)
-                return;
-            }
-             
-      
-            
-
-
-
-            //IEnumerable<Type> symbol = TheCollection.Cast<Type>();
-            // Optionally, if the IEnumberable<Type> doesn't do it for you:
-            //var list = new List<Type>(symbol);
-            // Converting observable collection back to regular collection
-            // https://stackoverflow.com/a/1658656
-
-
-
-            // ** TODO: Figure out how to get the default placeholder text
-            // Provided by the control to be the content of the Text field
-            // when it is queried by other controls
-
-            // I think the answer is to set the Text property directly in Xaml
-            // instead of using the PlaceholderText property
-
-
-
-
-            // Create an IEnumerable<Song> that we can pass to the PlayListManager
-            // so that it can iterate through the list of selected songs 
-            IEnumerable<Song> selectedSongs =
-                PlayListSongSelectionEditView.SelectedItems.Cast<Song>();
-            // Following this example for how to use the Cast method on IEnumerable:
-            // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.cast?view=netframework-4.8
-            // See also the ListViewBase.SelectedItems property:
-            // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.listviewbase.selecteditems
-
-
-            // Pass the user input about the new playlist to the ViewModel
-            // so the PlayList object to be created and stored/managed on the
-            // back end
-            // Store a reference to the new PlayList, we'll use it to
-            // populate the playlist's songs into the view (avoiding doing
-            // a lookup by playlist string name)
-            var newPlaylist =
-                PlayListManager.CreateNewPlayList(newPlayListNameUserInput, selectedSongs);
-
-            // Re-populate the view's playlist collection
-            // to reflect the new playlist
-            PlayListManager.GetAllPlayLists(displayingPlayLists);
-
-            // Prepare the view's songs collection to be the songs from the
-            // new playlist
-            PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist);
-
-            // Switch to the songs view
-            switchToContentView(contentView.PlayListPlayBack);
-
-            // Select/highlight the new playlist in the left sidebar view
-            selectPlayListInMenuSidebarView(newPlaylist);
         }
 
         private void selectPlayListInMenuSidebarView(PlayList playList)
@@ -336,6 +227,127 @@ namespace Melody
             //               handler (PlayListMenuSidebarView_SelectionChanged) without
             //               getting compiler errors in generated code.
 
+        }
+
+        private void PlayListName_UserInput_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                // Share playlist save logic with the "Save Playlist" button
+                newPlayListSaveHelper();
+            }
+        }
+
+        private void newPlayListSaveHelper()
+        {
+            // TODO: Figure out why ShowMode is not working with Flyout, that is,
+            // it is not showing up as a member of Flyout for some reason
+            //((Button)sender).Flyout.ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway;
+
+            // If the user has neglected to select any songs for their playlist
+            if (PlayListSongSelectionEditView.SelectedItems.Count == 0)
+            {
+                // Show a flyout explaining why the playlist can't be saved
+                FlyoutText_for_PlayListSaveButton.Text =
+                    "Choose some songs first.";
+                FlyoutBase.ShowAttachedFlyout(PlayListSaveButton);
+                // See: "How to create a flyout"
+                // https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts#how-to-create-a-flyout
+
+                // ABORT saving the playlist
+                // (Remain in PlayListCreationView, retaining the user input or
+                // default offered playlist name)
+                return;
+            }
+
+
+
+            // Ignore leading and trailing whtiespace from user input
+            // Note that this is not just for comparison;
+            // disallow leading and trailing whitespace from playlist names
+            // because that is awkward, confusing and probably unintentional
+            string newPlayListNameUserInput = PlayListName_UserInput.Text.Trim();
+
+
+            // If user deleted the default playlist offer text, leaving the input empty
+            if (newPlayListNameUserInput.Length == 0)
+            {
+                // Show a flyout explaining why the playlist can't be saved
+                FlyoutText_for_PlayListName_UserInput.Text =
+                    "Please set a name for your playlist.";
+                FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
+
+                // ABORT saving the playlist
+                // (Remain in PlayListCreationView, retaining any user-selected songs)
+                return;
+            }
+
+
+            // Get a handle to the observable collection that we can use with a LINQ query
+            IEnumerable<PlayList> ieDisplayingPlayLists = displayingPlayLists.Cast<PlayList>();
+
+            bool playListNameAlreadyUsed = ieDisplayingPlayLists.ToList().Exists(playList =>
+                        String.Equals(playList.Name, newPlayListNameUserInput));
+
+            if (playListNameAlreadyUsed)
+            {
+                // Show a flyout explaining why the playlist can't be saved
+                FlyoutText_for_PlayListName_UserInput.Text =
+                    "Playlist name is already taken. Please use a new name.";
+                FlyoutBase.ShowAttachedFlyout(PlayListName_UserInput);
+
+                // ABORT saving the playlist
+                // (Remain in PlayListCreationView, retaining any user-selected songs)
+                return;
+            }
+
+
+
+
+
+
+            //IEnumerable<Type> symbol = TheCollection.Cast<Type>();
+            // Optionally, if the IEnumberable<Type> doesn't do it for you:
+            //var list = new List<Type>(symbol);
+            // Converting observable collection back to regular collection
+            // https://stackoverflow.com/a/1658656
+
+
+
+
+
+            // Create an IEnumerable<Song> that we can pass to the PlayListManager
+            // so that it can iterate through the list of selected songs 
+            IEnumerable<Song> selectedSongs =
+                PlayListSongSelectionEditView.SelectedItems.Cast<Song>();
+            // Following this example for how to use the Cast method on IEnumerable:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.cast?view=netframework-4.8
+            // See also the ListViewBase.SelectedItems property:
+            // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.listviewbase.selecteditems
+
+
+            // Pass the user input about the new playlist to the ViewModel
+            // so the PlayList object to be created and stored/managed on the
+            // back end
+            // Store a reference to the new PlayList, we'll use it to
+            // populate the playlist's songs into the view (avoiding doing
+            // a lookup by playlist string name)
+            var newPlaylist =
+                PlayListManager.CreateNewPlayList(newPlayListNameUserInput, selectedSongs);
+
+            // Re-populate the view's playlist collection
+            // to reflect the new playlist
+            PlayListManager.GetAllPlayLists(displayingPlayLists);
+
+            // Prepare the view's songs collection to be the songs from the
+            // new playlist
+            PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist);
+
+            // Switch to the songs view
+            switchToContentView(contentView.PlayListPlayBack);
+
+            // Select/highlight the new playlist in the left sidebar view
+            selectPlayListInMenuSidebarView(newPlaylist);
         }
     }
 }

@@ -114,6 +114,7 @@
                                See also: PlayListSaveButton_Click event handler -->
                     <TextBox x:Name="PlayListName_UserInput"
                              PlaceholderText="Enter Playlist Name"
+                             KeyDown="PlayListName_UserInput_KeyDown"
                              Padding="5">
                         <FlyoutBase.AttachedFlyout>
                             <!-- Setting LightDismissOverlayMode is a hack for not getting
