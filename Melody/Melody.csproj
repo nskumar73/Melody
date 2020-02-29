@@ -122,8 +122,10 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\PlayListModel.cs" />
+    <Compile Include="Model\PlayList.cs" />
+    <Compile Include="Model\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PlayListManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -131,6 +133,11 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\CreativeCommons\Comfort_Fit_-_03_-_Sorry.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Melody Image.png" />
+    <Content Include="Assets\PlaylistCoverPlaceholder.png" />
     <Content Include="Assets\2 Unlimited - Get Ready %28Steve Aoki Instrumental Radio Edit%29.m4a" />
     <Content Include="Assets\3LAU - How You Love Me %28feat. Bright Lights%29.m4a" />
     <Content Include="Assets\a-ha - Take On Me.m4a" />
@@ -172,6 +179,10 @@
       <Version>6.2.9</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Pdn\PlaylistCoverPlaceholder.pdn" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
