@@ -71,10 +71,11 @@ namespace Melody.ViewModel
 
         public static void Setup()
         {
-            createDummyAllSongsPlayList();
+            CreateDummyAllSongsPlayList();
+            //JSONHelper.GetAllPlayLists(allPlayLists);
         }
 
-        private static void createDummyAllSongsPlayList()
+        private static void CreateDummyAllSongsPlayList()
         {
             // Populate with dummy songs
             // (Represents the entire library of songs)

@@ -44,14 +44,14 @@ namespace Melody
             PlayListManager.GetAllPlayLists(displayingPlayLists);
 
             // Immediately enter playlist creation
-            createNewPlayListHelper();
+            CreateNewPlayListHelper();
 
             //MediaPlayerElement mediaPlayerElement1 = new MediaPlayerElement();
             //mediaPlayerElement1.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Media/video1.mp4"));
             //mediaPlayerElement1.AutoPlay = true;
         }
 
-        private enum contentView
+        private enum ContentView
         {
             PlayListCreation,
             PlayListPlayBack
@@ -60,21 +60,18 @@ namespace Melody
 
         // Manages the Visibility property on UI elements represented by
         // content views
-        private void switchToContentView(contentView contentView)
+        private void SwitchToContentView(ContentView destContentView)
         {
-            switch (contentView)
+        
+            switch (destContentView)
             {
-                case contentView.PlayListCreation:
-                    // Hide the playlist playback view
+                case ContentView.PlayListCreation:
                     PlayListPlayBackView.Visibility = Visibility.Collapsed;
-                    // Show the playlist creator view
                     PlayListCreationView.Visibility = Visibility.Visible;
 
                     break;
-                case contentView.PlayListPlayBack:
-                    // Hide the playlist creator view
+                case ContentView.PlayListPlayBack:
                     PlayListCreationView.Visibility = Visibility.Collapsed;
-                    // Show the playlist playback view set to the clicked playlist
                     PlayListPlayBackView.Visibility = Visibility.Visible;
 
                     break;
@@ -82,25 +79,15 @@ namespace Melody
             }
         }
 
-        private void PlayListSongSelectionEditView_SelectionChanged(
-                                    object sender, SelectionChangedEventArgs e)
-        {
-            // TODO: Figure out the correct way to delete this event
-            //       handler without getting compiler errors in generated code.
-        }
 
         private void PlayListSaveButton_Click(object sender, RoutedEventArgs e)
         {
-
             // Share playlist save logic with pressing Enter from the
             // user input TextBox
-            newPlayListSaveHelper();
-
-
-
+            SaveNewPlayListHelper();
         }
 
-        private void selectPlayListInMenuSidebarView(PlayList playList)
+        private void SelectPlayListInMenuSidebarView(PlayList playList)
         {
             // Look in the PlayListMenuSidebarView for the ListViewItem
             // that corresponds to the playList
@@ -126,16 +113,15 @@ namespace Melody
             PlayListManager.GetSongsByPlayList(displayingSongs, clickedPlayList);
 
             // Show the playlist playback view set to the clicked playlist
-            switchToContentView(contentView.PlayListPlayBack);
+            SwitchToContentView(ContentView.PlayListPlayBack);
         }
 
         // When the user clicks new playlist button
         private void CreateNewPlayListButton_Click(
                                         object sender, RoutedEventArgs e)
         {
-            createNewPlayListHelper();
+            CreateNewPlayListHelper();
         }
-
 
 
 
@@ -147,7 +133,7 @@ namespace Melody
         // Good article on nullable value types
         // https://www.tutorialsteacher.com/csharp/csharp-nullable-types
         // Note: "int?" is equivelant to "Nullable<int>"
-        private static int? getTemplateMatchNum(string nameToCompare, string template)
+        private static int? GetTemplateMatchNum(string nameToCompare, string template)
         {
             // If the name to compare contains exactly one instance of the template
             var index = nameToCompare.IndexOf(template);
@@ -168,16 +154,8 @@ namespace Melody
 
         // When the app first loads and also
         // When the user clicks the new playlist button
-        private void createNewPlayListHelper()
+        private void CreateNewPlayListHelper()
         {
-
-            // TODO: Refactor determining what default playlist name to offer
-            // Either into another helper fn or into the ViewModel
-            // Seems like the View should ask the ViewModel to do this
-            // Doesn't make senese for the view to do this with the
-            // ObservableCollection<PlayList>, right?
-
-
             // Right now we're figuring out what default playlist name to offer to the user
             // Find the default playlist name with the biggest number N
             // Offer a name ending with the next number (N + 1)
@@ -186,7 +164,7 @@ namespace Melody
             {
                 // If the playlist name matches the template text
                 // and its number is the new largest match
-                int? templateMatchNum = getTemplateMatchNum(playList.Name, PLAYLIST_NAME_TEMPLATE);
+                int? templateMatchNum = GetTemplateMatchNum(playList.Name, PLAYLIST_NAME_TEMPLATE);
                 if (templateMatchNum.HasValue && templateMatchNum.Value > largestPlayListNumMatch.GetValueOrDefault())
                                                                             // 0 is the default for int if int? is null
                 {
@@ -208,25 +186,16 @@ namespace Melody
 
 
 
-
-
             // Write the default playlist offer into the user input text box
-            PlayListName_UserInput.Text = playListNameToOfferSB.ToString();
+
+            PlayListName_UserInput.Text =
+                                playListNameToOfferSB.ToString();
 
             // Display all songs
             PlayListManager.GetAllSongs(displayingSongs);
 
             // Finally, show the PlayListCreationView
-            switchToContentView(contentView.PlayListCreation);
-        }
-
-        private void PlayListMenuSidebarView_SelectionChanged(
-                                    object sender, SelectionChangedEventArgs e)
-        {
-            // TODO: Figure out the correct way to delete this event
-            //               handler (PlayListMenuSidebarView_SelectionChanged) without
-            //               getting compiler errors in generated code.
-
+            SwitchToContentView(ContentView.PlayListCreation);
         }
 
         private void PlayListName_UserInput_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -234,11 +203,11 @@ namespace Melody
             if (e.Key == VirtualKey.Enter)
             {
                 // Share playlist save logic with the "Save Playlist" button
-                newPlayListSaveHelper();
+                SaveNewPlayListHelper();
             }
         }
 
-        private void newPlayListSaveHelper()
+        private void SaveNewPlayListHelper()
         {
             // TODO: Figure out why ShowMode is not working with Flyout, that is,
             // it is not showing up as a member of Flyout for some reason
@@ -284,10 +253,8 @@ namespace Melody
 
 
             // Get a handle to the observable collection that we can use with a LINQ query
-            IEnumerable<PlayList> ieDisplayingPlayLists = displayingPlayLists.Cast<PlayList>();
-
-            bool playListNameAlreadyUsed = ieDisplayingPlayLists.ToList().Exists(playList =>
-                        String.Equals(playList.Name, newPlayListNameUserInput));
+            bool playListNameAlreadyUsed = displayingPlayLists.ToList().Exists(
+                playList => String.Equals(playList.Name, newPlayListNameUserInput));
 
             if (playListNameAlreadyUsed)
             {
@@ -301,10 +268,7 @@ namespace Melody
                 return;
             }
 
-
-
-
-
+            
 
             //IEnumerable<Type> symbol = TheCollection.Cast<Type>();
             // Optionally, if the IEnumberable<Type> doesn't do it for you:
@@ -312,9 +276,7 @@ namespace Melody
             // Converting observable collection back to regular collection
             // https://stackoverflow.com/a/1658656
 
-
-
-
+            
 
             // Create an IEnumerable<Song> that we can pass to the PlayListManager
             // so that it can iterate through the list of selected songs 
@@ -324,6 +286,7 @@ namespace Melody
             // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.cast?view=netframework-4.8
             // See also the ListViewBase.SelectedItems property:
             // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.listviewbase.selecteditems
+
 
 
             // Pass the user input about the new playlist to the ViewModel
@@ -344,10 +307,28 @@ namespace Melody
             PlayListManager.GetSongsByPlayList(displayingSongs, newPlaylist);
 
             // Switch to the songs view
-            switchToContentView(contentView.PlayListPlayBack);
+            SwitchToContentView(ContentView.PlayListPlayBack);
 
             // Select/highlight the new playlist in the left sidebar view
-            selectPlayListInMenuSidebarView(newPlaylist);
+            SelectPlayListInMenuSidebarView(newPlaylist);
+        }
+
+
+
+        private void PlayListSongSelectionEditView_SelectionChanged(
+                                    object sender, SelectionChangedEventArgs e)
+        {
+            // TODO: Figure out the correct way to delete this event
+            //       handler without getting compiler errors in generated code.
+        }
+
+        private void PlayListMenuSidebarView_SelectionChanged(
+                            object sender, SelectionChangedEventArgs e)
+        {
+            // TODO: Figure out the correct way to delete this event
+            //               handler (PlayListMenuSidebarView_SelectionChanged) without
+            //               getting compiler errors in generated code.
+
         }
     }
 }
