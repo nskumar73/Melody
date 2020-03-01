@@ -35,5 +35,13 @@ namespace Melody.Model
         /// Example: "\Assets\Songs\I Will Survive - Gloria Gaynor.mp3"
         /// </summary>
         public string AudioFilePath { get; set; }
+
+        public Song (string name, string artist, string genre)
+        {
+            Name = name;
+            Artist = artist;
+            Genre = genre;
+            
+        }
     }
 }

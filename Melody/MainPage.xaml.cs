@@ -18,6 +18,7 @@ using System;
 using Melody.ViewModel;
 using Windows.Media.Core;
 using System.Text;
+using Windows.Storage;
 
 namespace Melody
 {
@@ -56,8 +57,8 @@ namespace Melody
         private enum contentView
         {
             PlayListCreation,
-            PlayListPlayBack
-            // TODO: Add element for the upcoming import-song-to-library view
+            PlayListPlayBack,
+            AddNewSong
         }
 
         // Manages the Visibility property on UI elements represented by
@@ -71,6 +72,8 @@ namespace Melody
                     PlayListPlayBackView.Visibility = Visibility.Collapsed;
                     // Show the playlist creator view
                     PlayListCreationView.Visibility = Visibility.Visible;
+                    // Hide the Add New Songs view
+                    AddNewSongView.Visibility = Visibility.Collapsed;
 
                     break;
                 case contentView.PlayListPlayBack:
@@ -78,9 +81,18 @@ namespace Melody
                     PlayListCreationView.Visibility = Visibility.Collapsed;
                     // Show the playlist playback view set to the clicked playlist
                     PlayListPlayBackView.Visibility = Visibility.Visible;
+                    // Hide the Add New Songs view
+                    AddNewSongView.Visibility = Visibility.Collapsed;
 
                     break;
-                    // TODO: Add option for the import-song-to-library view
+                case contentView.AddNewSong:
+                    // Hide the playlist creator view
+                    PlayListCreationView.Visibility = Visibility.Collapsed;
+                    // Hide the playlist playback view
+                    PlayListPlayBackView.Visibility = Visibility.Collapsed;
+                    // Show the Add New Songs view
+                    AddNewSongView.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
@@ -331,6 +343,64 @@ namespace Melody
             //               handler (PlayListMenuSidebarView_SelectionChanged) without
             //               getting compiler errors in generated code.
 
+        }
+
+        
+        
+        private async void AddNewSongButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Instantiates File Open picker and opens the dialogue
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.MusicLibrary;
+
+            //Filters the type of files acceptable to connect
+            picker.FileTypeFilter.Add(".mp3");
+            picker.FileTypeFilter.Add(".mp4");
+            
+            //Allows user to select the song
+            StorageFile song = await picker.PickSingleFileAsync();
+            if (song != null)
+            {
+                var stream = await song.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                var songpath = song.Path;
+                //await song.CopyAsync(musicFolder, song.Name, NameCollisionOption.GenerateUniqueName);
+
+            }
+
+            switchToContentView(contentView.AddNewSong);
+        }
+
+        
+        
+        private void SongSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            //Allow user to save name, artist, and genre
+            string name = SongTitle_UserInput.Text;
+            string artist = SongArtist_UserInput.Text;
+            string genre = Genre_UserInput.Text;
+            string filepath = "test";
+
+            //Copy over the audiofilepath
+            //string filepath = 
+
+            //Create new song 
+            Song addsong = new Song(name, artist, genre);
+
+
+            //add song to observable collection
+            
+            
+
+            //allSongsPlayList.Songs.Add(new Song
+            //    {
+            //        Name = $"Placeholder Song Name {num}",
+            //        Artist = "Placeholder Song Artist",
+            //        Genre = "Placeholder Song Genre"
+            //    })
+
+            switchToContentView(contentView.PlayListPlayBack);
         }
     }
 }
