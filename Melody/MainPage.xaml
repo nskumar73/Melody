@@ -45,6 +45,10 @@
                         Content="Create New Playlist"
                         Click="CreateNewPlayListButton_Click"
                         Padding="5"/>
+                <Button x:Name="AddNewSongButton"
+                        Content="Add New Song"
+                        Click="AddNewSongButton_Click"
+                        Padding="5"/>
                 <ListView x:Name="PlayListMenuSidebarView"
                       ItemsSource ="{x:Bind displayingPlayLists}"
                       IsItemClickEnabled="true"
@@ -113,8 +117,17 @@
                                already in use by a current playlist
                                See also: PlayListSaveButton_Click event handler -->
                     <TextBox x:Name="PlayListName_UserInput"
-                             PlaceholderText="XAML PLACEHOLDER TEXT"
-                             Padding="5"/>
+                             PlaceholderText="Enter Playlist Name"
+                             KeyDown="PlayListName_UserInput_KeyDown"
+                             Padding="5">
+                        <FlyoutBase.AttachedFlyout>
+                            <!-- Setting LightDismissOverlayMode is a hack for not getting
+                                 ShowMode to work. -->
+                            <Flyout LightDismissOverlayMode="On">
+                                <TextBlock x:Name="FlyoutText_for_PlayListName_UserInput"/>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </TextBox>
                     <Button x:Name="PlayListSaveButton"
                             Content="Save Playlist"
                             Click="PlayListSaveButton_Click"
@@ -128,7 +141,7 @@
                             <!-- Setting LightDismissOverlayMode is a hack for not getting
                                  ShowMode to work. -->
                             <Flyout LightDismissOverlayMode="On">
-                                <TextBlock Text="Choose some songs first."/>
+                                <TextBlock x:Name="FlyoutText_for_PlayListSaveButton"/>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
                     </Button>
@@ -160,7 +173,55 @@
             </ListView>
             <!--#endregion-->
 
+            <!--#region AddNewSongView Andrea-->
+            <!-- Appears on the right side of the page and shows the user
+            option to import song to library. Collapsed/hidden by default -->
+            <StackPanel x:Name="AddNewSongView"
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        Visibility="Collapsed">
+                <StackPanel Orientation="Vertical"
+                            Margin="5"
+                            HorizontalAlignment="Center">
+                    
+                    <!--Enter song title-->
+                    <TextBlock Text="Enter song title:" 
+                               Padding="5"/>
+                    <TextBox x:Name="SongTitle_UserInput"
+                             PlaceholderText="TITLE PLACEHOLDER TEXT"
+                             Padding="5"/>
+                    
+                    <!--Enter song artist-->
+                    <TextBlock Text="Enter artist name:" 
+                               Padding="5"/>
+                    <TextBox x:Name="SongArtist_UserInput"
+                             PlaceholderText="ARTIST PLACEHOLDER TEXT"
+                             Padding="5"/>
 
+                    <!--Enter song genre-->
+                    <TextBlock Text="Enter genre:" 
+                               Padding="5"/>
+                    <TextBox x:Name="Genre_UserInput"
+                             PlaceholderText="GENRE PLACEHOLDER TEXT"
+                             Padding="5"/>
+                    
+
+                    <!--Save button for import song-->
+                    <Button x:Name="SongSaveButton"
+                            Content="Add Song"
+                            Click="SongSaveButton_Click"
+                            Padding="5">
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <!--#endregion-->
+
+
+            
+            
+            
+            
+            
 
             <!--#region MediaPlayerBottomBar -->
             <MediaPlayerElement Grid.Row="1"
