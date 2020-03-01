@@ -19,6 +19,19 @@ namespace Melody.ViewModel
             return output2;
 
         }
+
+
+        public void WritePlayList(RootObject output)
+        {
+            using (StreamWriter file = File.CreateText(@"Melody.json"))
+            {
+
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, output);
+
+            }
+        }
+
         public class Song
         {
             public string name { get; set; }
