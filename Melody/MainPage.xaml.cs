@@ -18,6 +18,9 @@ using System;
 using Melody.ViewModel;
 using Windows.Media.Core;
 using System.Text;
+using Windows.Storage;
+
+
 
 namespace Melody
 {
@@ -54,8 +57,8 @@ namespace Melody
         private enum ContentView
         {
             PlayListCreation,
-            PlayListPlayBack
-            // TODO: Add element for the upcoming import-song-to-library view
+            PlayListPlayBack,
+            AddNewSong
         }
 
         // Manages the Visibility property on UI elements represented by
@@ -68,14 +71,25 @@ namespace Melody
                 case ContentView.PlayListCreation:
                     PlayListPlayBackView.Visibility = Visibility.Collapsed;
                     PlayListCreationView.Visibility = Visibility.Visible;
+                    // Hide the Add New Songs view
+                    AddNewSongView.Visibility = Visibility.Collapsed;
 
                     break;
                 case ContentView.PlayListPlayBack:
                     PlayListCreationView.Visibility = Visibility.Collapsed;
                     PlayListPlayBackView.Visibility = Visibility.Visible;
+                    // Hide the Add New Songs view
+                    AddNewSongView.Visibility = Visibility.Collapsed;
 
                     break;
-                    // TODO: Add option for the import-song-to-library view
+                case contentView.AddNewSong:
+                    // Hide the playlist creator view
+                    PlayListCreationView.Visibility = Visibility.Collapsed;
+                    // Hide the playlist playback view
+                    PlayListPlayBackView.Visibility = Visibility.Collapsed;
+                    // Show the Add New Songs view
+                    AddNewSongView.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
@@ -329,6 +343,75 @@ namespace Melody
             //               handler (PlayListMenuSidebarView_SelectionChanged) without
             //               getting compiler errors in generated code.
 
+        }
+
+        
+        
+        private async void AddNewSongButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Instantiates File Open picker and opens the dialogue
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.MusicLibrary;
+
+            //Filters the type of files acceptable to connect
+            picker.FileTypeFilter.Add(".mp3");
+            picker.FileTypeFilter.Add(".mp4");
+            
+            //Allows user to select the song
+            StorageFile song = await picker.PickSingleFileAsync();
+            if (song != null)
+            {
+                var stream = await song.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                var songpath = song.Path;
+                //await song.CopyAsync(musicFolder, song.Name, NameCollisionOption.GenerateUniqueName);
+
+            }
+
+            switchToContentView(contentView.AddNewSong);
+        }
+
+        
+        //Andrea
+        //Hello! So above is the button to open the file dialogue, and you'll see i have a songpath save there.. just park that thought for now
+        //Below is the song save button that's supposed to save the song and add to the collection after the user adds the song name, title, etc.
+        //For the first part, my thought was to convert all the input text into the parameters needed to create the song
+        //Im gonna send you a screenshot on slack real quick
+        //kk, i sent you a picture on slack on how i approached the songs portion, starting with converting the input text
+
+        // k
+        private void SongSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            //So the text inputs below can stay as part of the View, correct?
+            //The next step would be to create a method in the playlistmanager that the view can call below?
+            //okay!
+
+            // let's see yes here below you are setting up to make a song
+            // so all you'd need to do is make the CreateNewSong in playlist manaager like you said
+            // and pass these in
+            // then PlayListManager can add it on the back end
+
+            // one moment, let me peek at the summary of what I was I guess thinkign you were up to ...
+            // pasted a screenshot in slack...let's see if this mirrors what you are thinking/what you've done
+
+
+
+
+            //Allow user to save name, artist, and genre
+            string name = SongTitle_UserInput.Text;
+            string artist = SongArtist_UserInput.Text;
+            string genre = Genre_UserInput.Text;
+            string filepath = "test";
+
+            //TODO Copy over filepath
+
+            //Creates new song to add to all songs playlist
+            var newSong = PlayListManager.AddNewSong(name, artist, genre);
+
+
+
+            switchToContentView(contentView.PlayListPlayBack);
         }
     }
 }

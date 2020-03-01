@@ -18,7 +18,7 @@ namespace Melody.ViewModel
 
         private static readonly PlayList allSongsPlayList = new PlayList("All Songs");
         private static readonly List<PlayList> allPlayLists = new List<PlayList>();
-        // private static readonly List<Song> allSongs = new List<Song>();
+        //private static readonly List<Song> allSongs = new List<Song>();
 
 
         /// <summary>
@@ -81,17 +81,26 @@ namespace Melody.ViewModel
             // (Represents the entire library of songs)
             for (var num = 1; num <= DUMMY_SONGS_COUNT; ++num)
             {
-                allSongsPlayList.Songs.Add(new Song
-                {
-                    Name = $"Placeholder Song Name {num}",
-                    Artist = "Placeholder Song Artist",
-                    Genre = "Placeholder Song Genre"
-                });
+                var dummysong = new Song($"Placeholder Song Name {num}", "Placeholder Song Artist", "Placeholder Song Genre");
+                allSongsPlayList.Songs.Add(dummysong);
+
             }
 
             // First PlayList in the collection will be All Songs
             // Or not? Maybe need to special-case this?
             allPlayLists.Add(allSongsPlayList);
+
         }
+
+
+        public static Song AddNewSong(string name, string artist, string genre)
+        {
+            var newSong = new Song (name, artist, genre);
+            allSongsPlayList.Songs.Add(newSong);
+
+            return newSong;
+
+        }
+
     }
 }
