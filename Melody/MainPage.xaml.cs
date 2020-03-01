@@ -82,7 +82,7 @@ namespace Melody
                     AddNewSongView.Visibility = Visibility.Collapsed;
 
                     break;
-                case contentView.AddNewSong:
+                case ContentView.AddNewSong:
                     // Hide the playlist creator view
                     PlayListCreationView.Visibility = Visibility.Collapsed;
                     // Hide the playlist playback view
@@ -368,7 +368,7 @@ namespace Melody
 
             }
 
-            switchToContentView(contentView.AddNewSong);
+            SwitchToContentView(ContentView.AddNewSong);
         }
 
         
@@ -409,9 +409,9 @@ namespace Melody
             //Creates new song to add to all songs playlist
             var newSong = PlayListManager.AddNewSong(name, artist, genre);
 
+            PlayListManager.GetAllSongs(displayingSongs);
 
-
-            switchToContentView(contentView.PlayListPlayBack);
+            SwitchToContentView(ContentView.PlayListPlayBack);
         }
     }
 }
