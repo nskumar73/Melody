@@ -224,12 +224,12 @@
             
 
             <!--#region MediaPlayerBottomBar -->
-            <MediaPlayerElement Grid.Row="1"
+            <!--MediaPlayerElement Grid.Row="1"
                                 Grid.ColumnSpan="2"
                                 x:Name="MediaPlayerBottomBar"
                                 Source="ms-appx:///Media/video1.mp4"
                                 AutoPlay="false"
-                                AreTransportControlsEnabled="true"/>
+                                AreTransportControlsEnabled="true"/-->
             
             <!-- Relative path to creative commons test file:
             \Assets\CreativeCommons\Comfort_Fit_-_03_-_Sorry.mp3 -->

@@ -18,7 +18,7 @@ namespace Melody.ViewModel
 
         private static PlayList allSongsPlayList;
         private static List<PlayList> allPlayLists;
-        private static JsonHelper.RootObject jsonRoot;
+        private static JsonHelper.RootObject dataRoot;
 
         //private static readonly List<Song> allSongs = new List<Song>();
 
@@ -68,13 +68,19 @@ namespace Melody.ViewModel
             var newPlaylist = new PlayList(name);
             songs.ToList().ForEach( song => newPlaylist.Songs.Add(song) );
             allPlayLists.Add(newPlaylist);
+
+
+            // Update the external data store with the new playlist
+            dataRoot.playlists.Add(newPlaylist);
+            //JsonHelper.WriteData(dataRoot);
+            
             return newPlaylist;
         }
 
         public static void Setup()
         {
-            jsonRoot = JsonHelper.GetAllPlaylist();
-            allPlayLists = JsonHelper.GetAllPlaylist().playlists;
+            dataRoot = JsonHelper.GetData();
+            allPlayLists = JsonHelper.GetData().playlists;
             allSongsPlayList = allPlayLists[0];
 
 
@@ -104,6 +110,10 @@ namespace Melody.ViewModel
         {
             var newSong = new Song (name, artist, genre);
             allSongsPlayList.Songs.Add(newSong);
+
+            // Update the external data store with the new song
+            dataRoot.playlists[0].Songs.Add(newSong);
+            //JsonHelper.WriteData(dataRoot);
 
             return newSong;
 

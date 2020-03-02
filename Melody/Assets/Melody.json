@@ -6,7 +6,7 @@
         {
           "name": "Yesterday",
           "genre": "Pop",
-          "artist": "Beattles",
+          "artist": "Beatles",
           "audiofilepath": "/Assets/..."
         },
         {
@@ -20,12 +20,24 @@
           "genre": "Rock",
           "artist": "Cake",
           "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "Beat It",
+          "genre": "Pop",
+          "artist": "Michael Jackson",
+          "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "Girlfriend",
+          "genre": "Rock",
+          "artist": "Avril Lavigne",
+          "audiofilepath": "/Assets/..."
         }
       ],
       "coverfilepath": "/Assets/..."
     },
     {
-      "name": "Brillan",
+      "name": "Andrea's Playlist",
       "songs": [
         {
           "name": "Skyfall",

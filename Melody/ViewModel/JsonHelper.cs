@@ -11,25 +11,22 @@ namespace Melody.ViewModel
 {
     public static class JsonHelper
     {
-        public static RootObject GetAllPlaylist()
+        public static RootObject GetData()
         {
-
             StreamReader j = new StreamReader(@"Assets\Melody.json");
             var json = j.ReadToEnd();
             var output2 = JsonConvert.DeserializeObject<RootObject>(json);
+            j.Dispose();
             return output2;
-
         }
 
 
-        public static void WritePlayList(RootObject output)
+        public static void WriteData(RootObject output)
         {
             using (StreamWriter file = File.CreateText(@"Assets\Melody.json"))
             {
-
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, output);
-
             }
         }
 
