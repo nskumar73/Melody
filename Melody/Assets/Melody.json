@@ -1,0 +1,58 @@
+{
+  "playlists": [
+    {
+      "name": "All Songs",
+      "songs": [
+        {
+          "name": "Yesterday",
+          "genre": "Pop",
+          "artist": "Beatles",
+          "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "Skyfall",
+          "genre": "Pop",
+          "artist": "Adele",
+          "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "The Distance",
+          "genre": "Rock",
+          "artist": "Cake",
+          "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "Beat It",
+          "genre": "Pop",
+          "artist": "Michael Jackson",
+          "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "Girlfriend",
+          "genre": "Rock",
+          "artist": "Avril Lavigne",
+          "audiofilepath": "/Assets/..."
+        }
+      ],
+      "coverfilepath": "/Assets/..."
+    },
+    {
+      "name": "Andrea's Playlist",
+      "songs": [
+        {
+          "name": "Skyfall",
+          "genre": "Pop",
+          "artist": "Adele",
+          "audiofilepath": "/Assets/..."
+        },
+        {
+          "name": "The Distance",
+          "genre": "Rock",
+          "artist": "Cake",
+          "audiofilepath": "/Assets/..."
+        }
+      ],
+      "coverfilepath": "/Assets/..."
+    }
+  ]
+}
