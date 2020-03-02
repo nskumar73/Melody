@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Melody.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Melody.ViewModel
 {
-    public class JsonHelper
+    public static class JsonHelper
     {
         public static RootObject GetAllPlaylist()
         {
-            
-            StreamReader j = new StreamReader(@"Melody.json");
+
+            StreamReader j = new StreamReader(@"Assets\Melody.json");
             var json = j.ReadToEnd();
             var output2 = JsonConvert.DeserializeObject<RootObject>(json);
             return output2;
@@ -21,9 +22,9 @@ namespace Melody.ViewModel
         }
 
 
-        public void WritePlayList(RootObject output)
+        public static void WritePlayList(RootObject output)
         {
-            using (StreamWriter file = File.CreateText(@"Melody.json"))
+            using (StreamWriter file = File.CreateText(@"Assets\Melody.json"))
             {
 
                 JsonSerializer serializer = new JsonSerializer();
@@ -32,24 +33,10 @@ namespace Melody.ViewModel
             }
         }
 
-        public class Song
-        {
-            public string name { get; set; }
-            public string genre { get; set; }
-            public string artist { get; set; }
-            public string audiofilepath { get; set; }
-        }
-
-        public class Playlist
-        {
-            public string name { get; set; }
-            public List<Song> songs { get; set; }
-            public string coverfilepath { get; set; }
-        }
 
         public class RootObject
         {
-            public List<Playlist> playlists { get; set; }
+            public List<PlayList> playlists { get; set; }
         }
     }
 }

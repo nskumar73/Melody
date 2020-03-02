@@ -184,6 +184,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Melody.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\Pdn\PlaylistCoverPlaceholder.pdn" />
   </ItemGroup>
   <ItemGroup />

@@ -16,8 +16,10 @@ namespace Melody.ViewModel
         // Guaranteed to be static because it is const, correct?
         private const int DUMMY_SONGS_COUNT = 4;
 
-        private static readonly PlayList allSongsPlayList = new PlayList("All Songs");
-        private static readonly List<PlayList> allPlayLists = new List<PlayList>();
+        private static PlayList allSongsPlayList;
+        private static List<PlayList> allPlayLists;
+        private static JsonHelper.RootObject jsonRoot;
+
         //private static readonly List<Song> allSongs = new List<Song>();
 
 
@@ -71,26 +73,31 @@ namespace Melody.ViewModel
 
         public static void Setup()
         {
-            CreateDummyAllSongsPlayList();
+            jsonRoot = JsonHelper.GetAllPlaylist();
+            allPlayLists = JsonHelper.GetAllPlaylist().playlists;
+            allSongsPlayList = allPlayLists[0];
+
+
+            //CreateDummyAllSongsPlayList();
             //JSONHelper.GetAllPlayLists(allPlayLists);
         }
 
-        private static void CreateDummyAllSongsPlayList()
-        {
-            // Populate with dummy songs
-            // (Represents the entire library of songs)
-            for (var num = 1; num <= DUMMY_SONGS_COUNT; ++num)
-            {
-                var dummysong = new Song($"Placeholder Song Name {num}", "Placeholder Song Artist", "Placeholder Song Genre");
-                allSongsPlayList.Songs.Add(dummysong);
+        //private static void CreateDummyAllSongsPlayList()
+        //{
+        //    // Populate with dummy songs
+        //    // (Represents the entire library of songs)
+        //    for (var num = 1; num <= DUMMY_SONGS_COUNT; ++num)
+        //    {
+        //        var dummysong = new Song($"Placeholder Song Name {num}", "Placeholder Song Artist", "Placeholder Song Genre");
+        //        allSongsPlayList.Songs.Add(dummysong);
 
-            }
+        //    }
 
-            // First PlayList in the collection will be All Songs
-            // Or not? Maybe need to special-case this?
-            allPlayLists.Add(allSongsPlayList);
+        //    // First PlayList in the collection will be All Songs
+        //    // Or not? Maybe need to special-case this?
+        //    allPlayLists.Add(allSongsPlayList);
 
-        }
+        //}
 
 
         public static Song AddNewSong(string name, string artist, string genre)
