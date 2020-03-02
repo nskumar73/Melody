@@ -372,32 +372,10 @@ namespace Melody
         }
 
         
-        //Andrea
-        //Hello! So above is the button to open the file dialogue, and you'll see i have a songpath save there.. just park that thought for now
-        //Below is the song save button that's supposed to save the song and add to the collection after the user adds the song name, title, etc.
-        //For the first part, my thought was to convert all the input text into the parameters needed to create the song
-        //Im gonna send you a screenshot on slack real quick
-        //kk, i sent you a picture on slack on how i approached the songs portion, starting with converting the input text
 
-        // k
         private void SongSaveButton_Click(object sender, RoutedEventArgs e)
         {
-
-            //So the text inputs below can stay as part of the View, correct?
-            //The next step would be to create a method in the playlistmanager that the view can call below?
-            //okay!
-
-            // let's see yes here below you are setting up to make a song
-            // so all you'd need to do is make the CreateNewSong in playlist manaager like you said
-            // and pass these in
-            // then PlayListManager can add it on the back end
-
-            // one moment, let me peek at the summary of what I was I guess thinkign you were up to ...
-            // pasted a screenshot in slack...let's see if this mirrors what you are thinking/what you've done
-
-
-
-
+                       
             //Allow user to save name, artist, and genre
             string name = SongTitle_UserInput.Text;
             string artist = SongArtist_UserInput.Text;
