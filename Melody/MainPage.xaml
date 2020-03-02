@@ -16,8 +16,6 @@
         </Grid.RowDefinitions>
 
         <!--#region Melody Banner and Future Cover Art -->
-        <!-- In future, wrap this Image in a Layout control to provide for
-            right-aligned album cover art -->
         <Image Source="/Assets/Melody Image.png"
                Height="40"
                HorizontalAlignment="Left"/>
@@ -38,9 +36,7 @@
             page real estate. PlayListCreationView is Visible by default,
             PlayListPlayBackView is Collapsed/hidden by default, these visible
             states are managed in MainPage event handlers -->
-            <StackPanel> <!-- TODO: Make this a RelativePanel instead?
-                Want the Create New Playlist button to inherit width from
-                the ListView beneath it-->
+            <StackPanel> 
                 <Button x:Name="CreateNewPlayListButton"
                         Content="Create New Playlist"
                         Click="CreateNewPlayListButton_Click"
@@ -54,9 +50,6 @@
                       IsItemClickEnabled="true"
                       ItemClick="PlayListMenuSidebarView_ItemClick"
                       SelectionChanged="PlayListMenuSidebarView_SelectionChanged">
-                      <!-- TODO: Figure out the correct way to delete this event
-                           handler (PlayListMenuSidebarView_SelectionChanged) without
-                           getting compiler errors in generated code. -->
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:PlayList">
                             <StackPanel Orientation="Horizontal"
@@ -156,7 +149,9 @@
             <ListView x:Name="PlayListPlayBackView"
                         Grid.Column="1"
                         ItemsSource="{x:Bind displayingSongs}"
-                        Visibility="Collapsed">
+                        Visibility="Collapsed"
+                      SelectionMode="Single"
+                      Tapped="PlayListPlayBackView_Tapped">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:Song">
                         <StackPanel Orientation="Vertical"
@@ -216,20 +211,12 @@
             </StackPanel>
             <!--#endregion-->
 
-
-            
-            
-            
-            
-            
-
-            <!--#region MediaPlayerBottomBar -->
-            <MediaPlayerElement Grid.Row="1"
+            <!--<MediaPlayerElement Grid.Row="1"
                                 Grid.ColumnSpan="2"
                                 x:Name="MediaPlayerBottomBar"
-                                Source="ms-appx:///Media/video1.mp4"
+                                Source="ms-appx:///Asset/video1.mp4"
                                 AutoPlay="false"
-                                AreTransportControlsEnabled="true"/>
+                                AreTransportControlsEnabled="true"/>-->
             
             <!-- Relative path to creative commons test file:
             \Assets\CreativeCommons\Comfort_Fit_-_03_-_Sorry.mp3 -->

@@ -49,9 +49,12 @@ namespace Melody
             // Immediately enter playlist creation
             CreateNewPlayListHelper();
 
-            //MediaPlayerElement mediaPlayerElement1 = new MediaPlayerElement();
-            //mediaPlayerElement1.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Media/video1.mp4"));
-            //mediaPlayerElement1.AutoPlay = true;
+            //Media Player Section
+
+
+            MediaPlayerElement mediaPlayerElement1 = new MediaPlayerElement();
+            mediaPlayerElement1.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Media/video1.mp4"));
+            mediaPlayerElement1.AutoPlay = true;
         }
 
         private enum ContentView
@@ -345,9 +348,15 @@ namespace Melody
 
         }
 
-        
-        
-        private async void AddNewSongButton_Click(object sender, RoutedEventArgs e)
+
+
+        public async void AddNewSongButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            await SetLocalMedia();
+        }
+
+        async public System.Threading.Tasks.Task SetLocalMedia()
         {
             //Instantiates File Open picker and opens the dialogue
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
@@ -363,8 +372,9 @@ namespace Melody
             if (song != null)
             {
                 var stream = await song.OpenAsync(Windows.Storage.FileAccessMode.Read);
-                var songpath = song.Path;
-                //await song.CopyAsync(musicFolder, song.Name, NameCollisionOption.GenerateUniqueName);
+                MediaPlayer.SetSource(stream, file.ContentType);
+                
+                //await song.CopyAsync(ApplicationData.Current.LocalFolder);
 
             }
 
@@ -380,31 +390,13 @@ namespace Melody
         //kk, i sent you a picture on slack on how i approached the songs portion, starting with converting the input text
 
         // k
-        private void SongSaveButton_Click(object sender, RoutedEventArgs e)
+        public void SongSaveButton_Click(object sender, RoutedEventArgs e)
         {
-
-            //So the text inputs below can stay as part of the View, correct?
-            //The next step would be to create a method in the playlistmanager that the view can call below?
-            //okay!
-
-            // let's see yes here below you are setting up to make a song
-            // so all you'd need to do is make the CreateNewSong in playlist manaager like you said
-            // and pass these in
-            // then PlayListManager can add it on the back end
-
-            // one moment, let me peek at the summary of what I was I guess thinkign you were up to ...
-            // pasted a screenshot in slack...let's see if this mirrors what you are thinking/what you've done
-
-
-
 
             //Allow user to save name, artist, and genre
             string name = SongTitle_UserInput.Text;
             string artist = SongArtist_UserInput.Text;
             string genre = Genre_UserInput.Text;
-            string filepath = "test";
-
-            //TODO Copy over filepath
 
             //Creates new song to add to all songs playlist
             var newSong = PlayListManager.AddNewSong(name, artist, genre);
@@ -412,6 +404,11 @@ namespace Melody
             PlayListManager.GetAllSongs(displayingSongs);
 
             SwitchToContentView(ContentView.PlayListPlayBack);
+        }
+
+        private void PlayListPlayBackView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            
         }
     }
 }
